@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="rtl">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,28 +18,26 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <x-banner />
-
-        <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
-
-            <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
-            <!-- Page Content -->
-            <main>
-                {{ $slot }}
+     
+        <div class="flex flex-col min-h-screen">
+            <!-- Header -->
+            <header class="bg-gray-800 text-white p-4">
+                <div class="container mx-auto">
+                    <h1 class="text-xl font-bold">وبسایت یادداشتهای روزانه من</h1>
+                </div>
+            </header>
+        
+            <!-- Main Content -->
+            <main class="flex-grow">
+                {{-- {{ $slot }} --}}
+                @yield('content')
             </main>
+        
+            <!-- Footer -->
+            <footer class="bg-gray-800 text-white p-4 text-center">
+                <p>&copy; 2024 Your Name. All rights reserved.</p>
+            </footer>
         </div>
-
-        @stack('modals')
-
-        @livewireScripts
+        
     </body>
 </html>

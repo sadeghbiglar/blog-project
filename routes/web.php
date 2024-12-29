@@ -15,3 +15,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+Route::get('/', function () {
+    return view('home');
+})->name('home');
