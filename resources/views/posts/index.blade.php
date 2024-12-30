@@ -10,6 +10,8 @@
                 <a href="{{ route('posts.show', $post) }}" class="text-blue-600 hover:underline">{{ $post->title }}</a>
             </h2>
             <p class="text-gray-700 mt-2">{{ Str::limit($post->content, 100) }}</p>
+            <img src={{$post->image }} width="200" height="300">
+
         </div>
     @endforeach
 
