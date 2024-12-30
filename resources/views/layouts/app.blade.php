@@ -10,6 +10,7 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link href="{{ asset('fonts/vazir/Vazir.css') }}" rel="stylesheet" type="text/css" />
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -23,7 +24,7 @@
             <!-- Header -->
             <header class="bg-gray-800 text-white p-4">
                 <div class="container mx-auto">
-                    <h1 class="text-xl font-bold">وبسایت یادداشتهای روزانه من</h1>
+                    <h1 class="font-vazir text-xl font-bold"> یادداشتهای روزانه من</h1>
                 </div>
             </header>
         

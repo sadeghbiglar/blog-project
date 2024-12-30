@@ -4,11 +4,11 @@
 <div class="flex flex-col min-h-screen">
     <!-- Header -->
     <header class="bg-gray-800 text-white">
-        <div class="container mx-auto p-4">
+        <div class="w-full h-64 bg-cover bg-center" style="background-image: url('{{ asset('images/header.jpg') }}');">
             
             <!-- Header Image -->
            
-            <div class="w-full h-64 bg-cover bg-center" style="background-image: url('{{ asset('images/header.jpg') }}');"></div>
+            {{-- <div class="w-full h-64 bg-cover bg-center" style="background-image: url('{{ asset('images/header.jpg') }}');"></div> --}}
 
         </div>
     </header>
@@ -16,19 +16,21 @@
     <!-- Navigation Menu -->
     <nav class="bg-gray-700 text-white">
         <div class="container mx-auto">
-            <ul class="flex space-x-4 p-4">
-                <li><a href="/" class="hover:underline">صفحه اصلی</a></li>
-                <li><a href="/about" class="hover:underline">درباره ما</a></li>
-                <li class="relative group">
+            <ul class="flex p-4">
+                <li class="mr-4"><a href="/" class="hover:underline">صفحه اصلی</a></li>
+                <li class="mr-4"><a href="/about" class="hover:underline">درباره ما</a></li>
+                <li class="relative group mr-4">
                     <a href="#" class="hover:underline">دسته‌بندی‌ها</a>
-                    <ul class="absolute hidden group-hover:block bg-gray-800 text-white mt-2 rounded-lg shadow-lg">
+                    <ul class="absolute hidden group-hover:block bg-gray-800 text-white mt-2 rounded-lg shadow-lg min-w-48 max-w-64">
                         <li><a href="/category/tech" class="block px-4 py-2 hover:bg-gray-700">تکنولوژی</a></li>
                         <li><a href="/category/life" class="block px-4 py-2 hover:bg-gray-700">سبک زندگی</a></li>
-                        <li><a href="/category/travel" class="block px-4 py-2 hover:bg-gray-700">سفر</a></li>
+                        <li><a href="/category/travel" class="block px-4 py-2 hover:bg-gray-700">مسافرت و گردشگری</a></li>
                     </ul>
+                    
                 </li>
-                <li><a href="/contact" class="hover:underline">تماس با ما</a></li>
+                <li class="mr-4"><a href="/contact" class="hover:underline">تماس با ما</a></li>
             </ul>
+            
         </div>
     </nav>
 
