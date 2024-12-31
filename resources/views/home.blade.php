@@ -1,6 +1,8 @@
+
 @extends('layouts.app')
 
 @section('content')
+
 <div class="flex flex-col min-h-screen">
     <!-- Header -->
     <header class="bg-gray-800 text-white">
@@ -15,7 +17,7 @@
 
     <!-- Navigation Menu -->
     <nav class="bg-gray-700 text-white">
-        <div class="container mx-auto">
+        <div class="container mx-auto flex items-center justify-between p-1">
             <ul class="flex p-4">
                 <li class="mr-4"><a href="/" class="hover:underline">صفحه اصلی</a></li>
                 <li class="mr-4"><a href="/about" class="hover:underline">درباره ما</a></li>
@@ -29,9 +31,24 @@
                     
                 </li>
                 <li class="mr-4"><a href="/contact" class="hover:underline">تماس با ما</a></li>
+             
+                
             </ul>
-            
+             <!-- فرم جستجو -->
+        <form action="{{ route('home') }}" method="GET" class="flex items-center">
+            <input 
+                type="text" 
+                name="search" 
+                placeholder="جستجو..." 
+                class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-500"
+            >
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-700">
+                جستجو
+            </button>
+        </form>
+         
         </div>
+     
     </nav>
 
     <!-- Main Content -->
