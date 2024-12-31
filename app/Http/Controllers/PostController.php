@@ -24,7 +24,8 @@ class PostController extends Controller
     // نمایش فرم ایجاد پست
     public function create()
     {
-        return view('posts.create');
+        $categories = \App\Models\Category::all(); // دریافت تمام دسته‌بندی‌ها
+        return view('posts.create', compact('categories'));
     }
 
     // ذخیره پست جدید
@@ -33,23 +34,25 @@ class PostController extends Controller
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
+            'category_id' => 'nullable|exists:categories,id',
             'image' => 'nullable|image|max:2048',
         ]);
-
+    
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('posts', 'public');
         }
-
+    
         Post::create([
             'title' => $request->title,
             'content' => $request->content,
+            'category_id' => $request->category_id,
             'image' => $imagePath,
         ]);
-
-        return redirect()->route('posts.index')->with('success', 'پست با موفقیت ایجاد شد.');
+    
+        return redirect()->route('home')->with('success', 'پست با موفقیت ایجاد شد.');
     }
-
+    
     // نمایش یک پست خاص
     public function show(Post $post)
     {

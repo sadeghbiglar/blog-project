@@ -24,9 +24,13 @@
                 <li class="relative group mr-4">
                     <a href="#" class="hover:underline">دسته‌بندی‌ها</a>
                     <ul class="absolute hidden group-hover:block bg-gray-800 text-white mt-2 rounded-lg shadow-lg min-w-48 max-w-64">
-                        <li><a href="/category/tech" class="block px-4 py-2 hover:bg-gray-700">تکنولوژی</a></li>
-                        <li><a href="/category/life" class="block px-4 py-2 hover:bg-gray-700">سبک زندگی</a></li>
-                        <li><a href="/category/travel" class="block px-4 py-2 hover:bg-gray-700">مسافرت و گردشگری</a></li>
+                        @foreach (\App\Models\Category::all() as $category)
+                            <li>
+                                <a href="{{ route('categories.show', $category->slug) }}" class="block px-4 py-2 hover:bg-gray-700">
+                                    {{ $category->name }}
+                                </a>
+                            </li>
+                        @endforeach
                     </ul>
                     
                 </li>
@@ -77,7 +81,9 @@
                 @foreach ($posts as $post)
                     <article class="bg-white rounded-lg shadow-lg overflow-hidden">
                         @if ($post->image)
-                        <img  src={{$post->image }} width="200" height="300" >
+                        {{-- <img  src={{$post->image }} width="200" height="300" > --}}
+                        <img src="{{ asset('storage/' . $post->image) }}" width="200" height="300">
+
                         @endif
                         <div class="p-4">
                             <h2 class="text-xl font-bold">
@@ -85,6 +91,14 @@
                             </h2>
                             <p class="text-gray-600 mt-2">{{ Str::limit($post->content, 100) }}</p>
                             <a href="{{ route('posts.show', $post) }}" class="text-blue-600 hover:underline mt-4 block">ادامه مطلب</a>
+                            @if ($post->category)
+    <p class="text-sm text-gray-500">دسته‌بندی: 
+        <a href="{{ route('categories.show', $post->category->slug) }}" class="text-blue-600 hover:underline">
+            {{ $post->category->name }}
+        </a>
+    </p>
+@endif
+
                         </div>
                     </article>
                 @endforeach

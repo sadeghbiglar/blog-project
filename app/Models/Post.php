@@ -9,7 +9,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'image'];
+    protected $fillable = ['title', 'content', 'category_id', 'image'];
     public function comments()
 {
     return $this->hasMany(Comment::class);
@@ -17,6 +17,10 @@ class Post extends Model
 public function likes()
 {
     return $this->hasMany(Like::class);
+}
+public function category()
+{
+    return $this->belongsTo(Category::class);
 }
 
     //
