@@ -8,9 +8,16 @@ use App\Models\Post;
 class PostController extends Controller
 {
     // نمایش لیست پست‌ها
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::latest()->paginate(10);
+        $query = Post::query();
+
+    if ($request->has('search') && $request->search) {
+        $query->where('title', 'like', '%' . $request->search . '%')
+              ->orWhere('content', 'like', '%' . $request->search . '%');
+    }
+
+    $posts = $query->latest()->paginate(10);
         return view('home', compact('posts'));
     }
 

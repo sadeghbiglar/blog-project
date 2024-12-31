@@ -17,7 +17,7 @@
 
     <!-- Navigation Menu -->
     <nav class="bg-gray-700 text-white">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between p-4">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between p-1">
             <ul class="flex p-4">
                 <li class="mr-4"><a href="/" class="hover:underline">صفحه اصلی</a></li>
                 <li class="mr-4"><a href="/about" class="hover:underline">درباره ما</a></li>
