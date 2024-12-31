@@ -20,3 +20,4 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 Route::resource('posts', PostController::class);
+Route::get('/', [PostController::class, 'index'])->name('home');

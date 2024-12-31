@@ -55,18 +55,29 @@
             </div>
         </aside>
 
-        <!-- Main Posts Section -->
         <section class="w-full md:w-3/5 px-4">
             <div class="grid gap-6">
-                <!-- Example Post -->
-                <article class="bg-white rounded-lg shadow-lg p-4">
-                    <h2 class="text-xl font-bold"><a href="/post/1" class="text-gray-800 hover:text-blue-600">عنوان پست</a></h2>
-                    <p class="text-gray-600 mt-2">متن کوتاه برای توضیحات پست ...</p>
-                    <a href="/post/1" class="text-blue-600 hover:underline mt-4 block">ادامه مطلب</a>
-                </article>
-                <!-- Add More Posts Here -->
+                @foreach ($posts as $post)
+                    <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+                        @if ($post->image)
+                        <img  src={{$post->image }} width="200" height="300" >
+                        @endif
+                        <div class="p-4">
+                            <h2 class="text-xl font-bold">
+                                <a href="{{ route('posts.show', $post) }}" class="text-gray-800 hover:text-blue-600">{{ $post->title }}</a>
+                            </h2>
+                            <p class="text-gray-600 mt-2">{{ Str::limit($post->content, 100) }}</p>
+                            <a href="{{ route('posts.show', $post) }}" class="text-blue-600 hover:underline mt-4 block">ادامه مطلب</a>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        
+            <div class="mt-6">
+                {{ $posts->links() }} <!-- لینک‌های صفحه‌بندی -->
             </div>
         </section>
+        
 
         <!-- Left Sidebar -->
         <aside class="w-full md:w-1/5 px-4">
