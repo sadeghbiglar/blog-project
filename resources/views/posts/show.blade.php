@@ -10,7 +10,16 @@
         @endif
 
         <p class="text-gray-700 leading-relaxed">{{ $post->content }}</p>
-
+        <div class="mt-4">
+            <button 
+                class="like-button bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                data-post-id="{{ $post->id }}"
+            >
+                👍 لایک 
+                <span class="like-count">{{ $post->likes->count() }}</span>
+            </button>
+        </div>
+        
         <div class="mt-6">
             <a href="{{ route('home') }}" class="text-blue-600 hover:underline">بازگشت به صفحه اصلی</a>
         </div>
