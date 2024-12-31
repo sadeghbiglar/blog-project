@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -21,3 +22,4 @@ Route::get('/', function () {
 })->name('home');
 Route::resource('posts', PostController::class);
 Route::get('/', [PostController::class, 'index'])->name('home');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');

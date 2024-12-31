@@ -22,9 +22,29 @@
      
         <div class="flex flex-col min-h-screen">
             <!-- Header -->
-            <header class="bg-gray-800 text-white p-4">
-                <div class="container mx-auto">
+            <header class="bg-gray-800 text-white p-1">
+                <div class="container mx-auto flex flex-col md:flex-row items-center justify-between p-1">
                     <h1 class="font-vazir text-xl font-bold"> یادداشتهای روزانه من</h1>
+                     <!-- بخش ورود/خروج -->
+        <div class="flex items-center">
+            @auth
+                <!-- دکمه خروج -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-red-700">
+                        خروج
+                    </button>
+                </form>
+            @else
+                <!-- دکمه‌های ورود و ثبت‌نام -->
+                <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-700">
+                    ورود
+                </a>
+                <a href="{{ route('register') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-green-700">
+                    ثبت‌نام
+                </a>
+            @endauth
+        </div>
                 </div>
             </header>
         
