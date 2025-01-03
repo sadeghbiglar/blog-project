@@ -75,31 +75,41 @@
                 </ul>
             </div>
         </aside>
-
         <section class="w-full md:w-3/5 px-4">
             <div class="grid gap-6">
                 @foreach ($posts as $post)
-                    <article class="bg-white rounded-lg shadow-lg overflow-hidden">
-                        @if ($post->image)
-                        {{-- <img  src={{$post->image }} width="200" height="300" > --}}
-                        <img src="{{ asset('storage/' . $post->image) }}" width="200" height="300">
-
-                        @endif
-                        <div class="p-4">
-                            <h2 class="text-xl font-bold">
-                                <a href="{{ route('posts.show', $post) }}" class="text-gray-800 hover:text-blue-600">{{ $post->title }}</a>
+                    <article class="bg-white rounded-lg shadow-lg overflow-hidden p-4 flex flex-col md:flex-row items-center md:items-start">
+                       
+        
+                        <!-- ستون متن -->
+                        <div class="flex-grow">
+                            <h2 class="text-xl font-bold mb-2">
+                                <a href="{{ route('posts.show', $post) }}" class="text-gray-800 hover:text-blue-600">
+                                    {{ $post->title }}
+                                </a>
                             </h2>
-                            <p class="text-gray-600 mt-2">{{ Str::limit($post->content, 100) }}</p>
-                            <a href="{{ route('posts.show', $post) }}" class="text-blue-600 hover:underline mt-4 block">ادامه مطلب</a>
+                            <p class="text-gray-600 mb-4">{{ Str::limit($post->content, 100) }}</p>
+                            
                             @if ($post->category)
-    <p class="text-sm text-gray-500">دسته‌بندی: 
-        <a href="{{ route('categories.show', $post->category->slug) }}" class="text-blue-600 hover:underline">
-            {{ $post->category->name }}
-        </a>
-    </p>
-@endif
-
+                                <p class="text-sm text-gray-500 mb-4">
+                                    دسته‌بندی: 
+                                    <a href="{{ route('categories.show', $post->category->slug) }}" class="text-blue-600 hover:underline">
+                                        {{ $post->category->name }}
+                                    </a>
+                                </p>
+                            @endif
+        
+                            <a href="{{ route('posts.show', $post) }}" class="text-blue-600 hover:underline font-bold">
+                                ادامه مطلب
+                            </a>
                         </div>
+                         <!-- ستون تصویر -->
+                         @if ($post->image)
+                         <div class="flex-shrink-0 mb-4 md:mb-0 md:ml-4">
+                             <img src="{{ asset('storage/' . $post->image) }}" alt="{{ $post->title }}" title="{{ $post->title }}" 
+                                  class="rounded-lg shadow-lg max-h-64 w-64 object-cover">
+                         </div>
+                     @endif
                     </article>
                 @endforeach
             </div>
@@ -108,6 +118,7 @@
                 {{ $posts->links() }} <!-- لینک‌های صفحه‌بندی -->
             </div>
         </section>
+        
         
 
         <!-- Left Sidebar -->
