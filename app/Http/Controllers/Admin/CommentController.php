@@ -5,9 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Comment;
+use Illuminate\Support\Facades\Auth;
 
 class CommentController extends Controller
 {
+    public function __construct()
+    {
+        // فقط مدیر به این کنترلر دسترسی دارد
+        if (!Auth::check() || !Auth::user()->is_admin) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
+    }
     public function index()
     {
         $comments = Comment::with('post', 'user')->latest()->paginate(10);

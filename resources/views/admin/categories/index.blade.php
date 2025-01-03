@@ -36,7 +36,7 @@
                             <form action="{{ route('dashboard.categories.destroy', $category) }}" method="POST" class="inline-block">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:underline">
+                                <button type="submit" onclick="return confirm('آیا مطمئن هستید؟')" class="text-red-600 hover:underline">
                                     حذف
                                 </button>
                             </form>

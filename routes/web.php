@@ -52,3 +52,4 @@ Route::post('/comments', [CommentController::class, 'store'])->name('comments.st
 Route::post('/likes', [LikeController::class, 'store'])->name('likes.store')->middleware('auth');
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');

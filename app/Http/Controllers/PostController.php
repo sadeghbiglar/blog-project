@@ -98,4 +98,5 @@ class PostController extends Controller
 
         return redirect()->route('posts.index')->with('success', 'پست با موفقیت حذف شد.');
     }
+
 }
