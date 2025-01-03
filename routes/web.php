@@ -3,12 +3,13 @@ use App\Http\Controllers\Admin\PostController as AdminPostController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
 use App\Http\Controllers\Admin\CommentController as AdminCommentController;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Mail;
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         // فقط مدیر به داشبورد دسترسی دارد
@@ -30,6 +31,35 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('comments', AdminCommentController::class);
     });
 });
+Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
+Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
+Route::post('/likes', [LikeController::class, 'store'])->name('likes.store')->middleware('auth');
+
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+
+
+Route::post('/contact', function (Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'message' => 'required|string',
+    ]);
+
+    // ارسال ایمیل (اختیاری)
+    Mail::raw($request->message, function ($mail) use ($request) {
+        $mail->to('sbmail555@gmail.com')
+             ->from($request->email, $request->name)
+             ->subject('پیام جدید از فرم تماس');
+    });
+
+    return back()->with('success', 'پیام شما ارسال شد!');
+})->name('contact.submit');
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -46,12 +76,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 /*  Route::get('/', function () {
      return view('home');
  })->name('home'); */
-Route::get('/', [PostController::class, 'index'])->name('home');
-Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
-Route::get('posts', [PostController::class, 'index'])->name('posts.index');
-Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
-Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
-Route::post('/likes', [LikeController::class, 'store'])->name('likes.store')->middleware('auth');
+
 //Route::resource('posts', PostController::class);
 //Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 //Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
