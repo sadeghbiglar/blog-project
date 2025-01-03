@@ -9,7 +9,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'category_id', 'image'];
+    protected $fillable = ['title', 'content', 'category_id', 'image','file'];
     public function comments()
 {
     return $this->hasMany(Comment::class)->where('approved', true);

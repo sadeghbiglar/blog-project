@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Post;
 class PostController extends Controller
 {
     public function __construct()
@@ -38,29 +38,39 @@ class PostController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|max:255',
-            'content' => 'required',
-            'category_id' => 'nullable|exists:categories,id',
-            'image' => 'nullable|image|max:2048',
-        ]);
-    
-        $imagePath = null;
-        if ($request->hasFile('image')) {
-            $imagePath = $request->file('image')->store('posts', 'public');
-        }
-    
-        \App\Models\Post::create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'category_id' => $request->category_id,
-            'image' => $imagePath,
-        ]);
-    
-        return redirect()->route('dashboard.posts.index')->with('success', 'پست با موفقیت ایجاد شد.');
+{
+    $request->validate([
+        'title' => 'required|max:255',
+        'content' => 'required',
+        'category_id' => 'nullable|exists:categories,id',
+        'image' => 'nullable|image|max:2048',
+        'file' => 'nullable|mimes:pdf,docx,txt|max:2048', // اعتبارسنجی فایل
+    ]);
+
+    $imagePath = null;
+    $filePath = null;
+
+    // ذخیره تصویر
+    if ($request->hasFile('image')) {
+        $imagePath = $request->file('image')->store('posts', 'public');
     }
-    
+
+    // ذخیره فایل
+    if ($request->hasFile('file')) {
+        $filePath = $request->file('file')->store('files', 'public');
+    }
+
+    Post::create([
+        'title' => $request->title,
+        'content' => $request->content,
+        'category_id' => $request->category_id,
+        'image' => $imagePath,
+        'file' => $filePath, // ذخیره مسیر فایل
+    ]);
+
+    return redirect()->route('home')->with('success', 'پست با موفقیت ایجاد شد.');
+}
+
 
     /**
      * Display the specified resource.
@@ -83,45 +93,64 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, \App\Models\Post $post)
-{
-    $request->validate([
-        'title' => 'required|max:255',
-        'content' => 'required',
-        'category_id' => 'nullable|exists:categories,id',
-        'image' => 'nullable|image|max:2048',
-    ]);
-
-    if ($request->hasFile('image')) {
-        // حذف تصویر قبلی
-        if ($post->image) {
-            \Storage::disk('public')->delete($post->image);
+    public function update(Request $request, Post $post)
+    {
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'image' => 'nullable|image|max:2048',
+            'file' => 'nullable|mimes:pdf,docx,txt|max:2048', // اعتبارسنجی فایل
+        ]);
+    
+        $imagePath = $post->image;
+        $filePath = $post->file;
+    
+        // به‌روزرسانی تصویر
+        if ($request->hasFile('image')) {
+            if ($post->image) {
+                \Storage::disk('public')->delete($post->image); // حذف تصویر قدیمی
+            }
+            $imagePath = $request->file('image')->store('posts', 'public');
         }
-        $post->image = $request->file('image')->store('posts', 'public');
+    
+        // به‌روزرسانی فایل
+        if ($request->hasFile('file')) {
+            if ($post->file) {
+                \Storage::disk('public')->delete($post->file); // حذف فایل قدیمی
+            }
+            $filePath = $request->file('file')->store('files', 'public');
+        }
+    
+        $post->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'image' => $imagePath,
+            'file' => $filePath, // به‌روزرسانی مسیر فایل
+        ]);
+    
+        return redirect()->route('posts.index')->with('success', 'پست با موفقیت به‌روزرسانی شد.');
     }
-
-    $post->update([
-        'title' => $request->title,
-        'content' => $request->content,
-        'category_id' => $request->category_id,
-        'image' => $post->image,
-    ]);
-
-    return redirect()->route('dashboard.posts.index')->with('success', 'پست با موفقیت به‌روزرسانی شد.');
-}
+    
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(\App\Models\Post $post)
-{
-    if ($post->image) {
-        \Storage::disk('public')->delete($post->image); // حذف تصویر از فایل‌ها
+    public function destroy(Post $post)
+    {
+        // حذف تصویر
+        if ($post->image) {
+            \Storage::disk('public')->delete($post->image);
+        }
+    
+        // حذف فایل
+        if ($post->file) {
+            \Storage::disk('public')->delete($post->file);
+        }
+    
+        $post->delete();
+    
+        return redirect()->route('posts.index')->with('success', 'پست با موفقیت حذف شد.');
     }
-    $post->delete();
-
-    return redirect()->route('dashboard.posts.index')->with('success', 'پست با موفقیت حذف شد.');
-}
-
+    
 }

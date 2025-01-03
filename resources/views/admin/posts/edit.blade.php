@@ -28,7 +28,12 @@
                 <img src="{{ asset('storage/' . $post->image) }}" alt="Current Image" class="w-40 h-40 mt-4 object-cover rounded-lg">
             @endif
         </div>
-
+        <div class="mb-4">
+            <label for="file" class="block text-sm font-medium text-gray-700">فایل:</label>
+            <input type="file" name="file" id="file" 
+                   class="block w-full mt-1 p-2 border border-gray-300 rounded-lg">
+        </div>
+        
         <div class="mb-4">
             <label for="category_id" class="block text-gray-700 font-bold mb-2">دسته‌بندی:</label>
             <select name="category_id" id="category_id" 

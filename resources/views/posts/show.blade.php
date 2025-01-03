@@ -13,6 +13,16 @@
         @endif
 
         <p class="text-gray-700 leading-relaxed">{{ $post->content }}</p>
+        @if ($post->file)
+    <div class="mt-4">
+        <a href="{{ asset('storage/' . $post->file) }}" 
+           class="text-blue-600 hover:underline" 
+           target="_blank">
+            دانلود فایل
+        </a>
+    </div>
+@endif
+
         <div class="mt-6">
             <a href="{{ route('home') }}" class="text-blue-600 hover:underline">بازگشت به صفحه اصلی</a>
         </div>

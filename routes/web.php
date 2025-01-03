@@ -43,13 +43,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 //         return view('dashboard');
 //     })->name('dashboard');
 // });
-// Route::get('/', function () {
-//     return view('home');
-// })->name('home');
-Route::resource('posts', PostController::class);
+/*  Route::get('/', function () {
+     return view('home');
+ })->name('home'); */
 Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
+Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
 Route::post('/likes', [LikeController::class, 'store'])->name('likes.store')->middleware('auth');
-Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
-Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
-Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
+//Route::resource('posts', PostController::class);
+//Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+//Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
