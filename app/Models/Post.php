@@ -12,7 +12,7 @@ class Post extends Model
     protected $fillable = ['title', 'content', 'category_id', 'image'];
     public function comments()
 {
-    return $this->hasMany(Comment::class);
+    return $this->hasMany(Comment::class)->where('approved', true);
 }
 public function likes()
 {
