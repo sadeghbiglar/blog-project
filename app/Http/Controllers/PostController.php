@@ -16,9 +16,9 @@ class PostController extends Controller
         $query->where('title', 'like', '%' . $request->search . '%')
               ->orWhere('content', 'like', '%' . $request->search . '%');
     }
-
+    $latestPosts = Post::latest()->take(10)->get();
     $posts = $query->latest()->paginate(10);
-        return view('home', compact('posts'));
+        return view('home', compact('posts','latestPosts'));
     }
 
     // نمایش فرم ایجاد پست

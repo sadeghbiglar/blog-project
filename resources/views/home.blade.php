@@ -63,13 +63,14 @@
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6">
                 <h3 class="text-lg font-bold mb-4">آخرین پست‌ها</h3>
                 <ul>
-                    @foreach ($posts as $post)
-                    <a href="{{ route('posts.show', $post) }}" class="block px-4 py-2 hover:bg-gray-700">
-                        {{ $post->title }}
-                    </a>
-                    @endforeach
-                  
-                </ul>
+                @foreach ($latestPosts as $latestPost)
+                    <li class="mb-2">
+                        <a href="{{ route('posts.show', $latestPost) }}" class="text-blue-600 hover:underline">
+                            {{ $latestPost->title }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
             </div>
             
         </aside>
