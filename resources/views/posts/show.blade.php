@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto flex flex-wrap">
+<div class="container mx-auto flex flex-wrap" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
     <!-- بخش اصلی -->
-    <div class="w-full lg:w-3/4 bg-white rounded-lg shadow-md p-6">
+    <div class="w-full lg:w-3/4 bg-white rounded-lg shadow-md p-6" >
         <h1 class="text-3xl font-bold mb-4">{{ $post->title }}</h1>
 
         @if ($post->image)
@@ -79,7 +79,7 @@
 
     <!-- ستون سمت راست -->
     <aside class="w-full lg:w-1/4 px-4 mt-6 lg:mt-0">
-        <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6">
+        <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
             <h3 class="text-lg font-bold mb-4">پست‌های مرتبط</h3>
             <ul>
                 @forelse ($relatedPosts as $relatedPost)
@@ -94,7 +94,7 @@
             </ul>
         </div>
 
-        <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
+        <div class="bg-gray-100 p-4 rounded-lg shadow-lg" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
             <h3 class="text-lg font-bold mb-4">ده پست آخر</h3>
             <ul>
                 @foreach ($latestPosts as $latestPost)

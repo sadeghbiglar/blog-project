@@ -60,7 +60,7 @@
     <main class="container mx-auto flex flex-wrap mt-6">
         <!-- Right Sidebar -->
         <aside class="w-full md:w-1/5 px-4">
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                 <h3 class="text-lg font-bold mb-4">آخرین پست‌ها</h3>
                 <ul>
                 @foreach ($latestPosts as $latestPost)
@@ -75,9 +75,10 @@
             
         </aside>
         <section class="w-full md:w-3/5 px-4">
-            <div class="grid gap-6">
+            <div 
+             class="grid gap-6">
                 @foreach ($posts as $post)
-                    <article class="bg-white rounded-lg shadow-lg overflow-hidden p-4 flex flex-col md:flex-row items-center md:items-start">
+                    <article class="bg-white rounded-lg shadow-lg overflow-hidden p-4 flex flex-col md:flex-row items-center md:items-start " style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                        
         
                         <!-- ستون متن -->
@@ -122,8 +123,8 @@
 
         <!-- Left Sidebar -->
         <aside class="w-full md:w-1/5 px-4">
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6">
-                <h3 class="text-lg font-bold mb-4">آرشیو پست‌ها</h3>
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
+                <h3 class="text-lg font-bold mb-4" >آرشیو پست‌ها</h3>
                 <ul>
                     @foreach (\App\Models\Post::selectRaw('YEAR(created_at) as year')->distinct()->pluck('year') as $year)
                         <li>
@@ -134,7 +135,7 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                 <h3 class="text-lg font-bold mb-4">طبقه‌بندی موضوعی</h3>
                 <ul>
                     @foreach (\App\Models\Category::all() as $category)
