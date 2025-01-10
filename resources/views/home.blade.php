@@ -125,8 +125,13 @@
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6">
                 <h3 class="text-lg font-bold mb-4">آرشیو پست‌ها</h3>
                 <ul>
-                    <li><a href="/archive/2023" class="text-blue-600 hover:underline">سال 2023</a></li>
-                    <li><a href="/archive/2022" class="text-blue-600 hover:underline">سال 2022</a></li>
+                    @foreach (\App\Models\Post::selectRaw('YEAR(created_at) as year')->distinct()->pluck('year') as $year)
+                        <li>
+                            <a href="{{ route('archive', $year) }}" class="text-blue-600 hover:underline">
+                                سال {{ $year }}
+                            </a>
+                        </li>
+                    @endforeach
                 </ul>
             </div>
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg">

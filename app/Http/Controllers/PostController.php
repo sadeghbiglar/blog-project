@@ -73,7 +73,16 @@ class PostController extends Controller
     
         return view('posts.show', compact('post', 'relatedPosts', 'latestPosts'));
     }
-    
+
+    //آرشیو تقویمی
+    public function archive($year)
+{
+    // فیلتر کردن پست‌ها بر اساس سال
+    $posts = Post::whereYear('created_at', $year)->latest()->paginate(10);
+
+    return view('posts.archive', compact('posts', 'year'));
+}
+
     // ویرایش پست
     public function edit(Post $post)
     {

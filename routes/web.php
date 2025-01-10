@@ -34,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::get('posts/{post}', [PostController::class, 'show'])->name('posts.show');
 Route::get('posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/archive/{year}', [PostController::class, 'archive'])->name('archive');
 Route::get('/categories/{slug}', [CategoryController::class, 'show'])->name('categories.show');
 Route::post('/comments', [CommentController::class, 'store'])->name('comments.store')->middleware('auth');
 Route::post('/likes', [LikeController::class, 'store'])->name('likes.store')->middleware('auth');
