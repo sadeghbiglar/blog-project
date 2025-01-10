@@ -54,11 +54,26 @@ class PostController extends Controller
     }
     
     // نمایش یک پست خاص
+  /*   public function show(Post $post)
+    {
+
+        return view('posts.show', compact('post'));
+    } */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        // پست‌های مرتبط
+        $relatedPosts = Post::where('category_id', $post->category_id)
+                            ->where('id', '!=', $post->id) // حذف پست فعلی
+                            ->latest()
+                            ->take(5)
+                            ->get();
+    
+        // ده پست آخر
+        $latestPosts = Post::latest()->take(10)->get();
+    
+        return view('posts.show', compact('post', 'relatedPosts', 'latestPosts'));
     }
-
+    
     // ویرایش پست
     public function edit(Post $post)
     {

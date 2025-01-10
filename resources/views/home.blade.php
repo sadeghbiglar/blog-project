@@ -63,18 +63,15 @@
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6">
                 <h3 class="text-lg font-bold mb-4">آخرین پست‌ها</h3>
                 <ul>
-                    <li><a href="/post/1" class="text-blue-600 hover:underline">عنوان پست 1</a></li>
-                    <li><a href="/post/2" class="text-blue-600 hover:underline">عنوان پست 2</a></li>
-                    <li><a href="/post/3" class="text-blue-600 hover:underline">عنوان پست 3</a></li>
+                    @foreach ($posts as $post)
+                    <a href="{{ route('posts.show', $post) }}" class="block px-4 py-2 hover:bg-gray-700">
+                        {{ $post->title }}
+                    </a>
+                    @endforeach
+                  
                 </ul>
             </div>
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
-                <h3 class="text-lg font-bold mb-4">پست‌های مرتبط</h3>
-                <ul>
-                    <li><a href="/post/4" class="text-blue-600 hover:underline">عنوان پست مرتبط 1</a></li>
-                    <li><a href="/post/5" class="text-blue-600 hover:underline">عنوان پست مرتبط 2</a></li>
-                </ul>
-            </div>
+            
         </aside>
         <section class="w-full md:w-3/5 px-4">
             <div class="grid gap-6">
@@ -134,9 +131,14 @@
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg">
                 <h3 class="text-lg font-bold mb-4">طبقه‌بندی موضوعی</h3>
                 <ul>
-                    <li><a href="/category/tech" class="text-blue-600 hover:underline">تکنولوژی</a></li>
-                    <li><a href="/category/life" class="text-blue-600 hover:underline">سبک زندگی</a></li>
-                </ul>
+                    @foreach (\App\Models\Category::all() as $category)
+                            <li>
+                                <a href="{{ route('categories.show', $category->slug) }}" class="block px-4 py-2 hover:bg-gray-700">
+                                    {{ $category->name }}
+                                </a>
+                            </li>
+                        @endforeach
+                      </ul>
             </div>
         </aside>
     </main>
