@@ -105,8 +105,8 @@
                                     {{ $post->title }}
                                 </a>
                             </h2>
-                            <p class="text-gray-600 mb-4">{{ Str::limit($post->content, 100) }}</p>
-                            
+                            <p class="text-gray-600 mb-4">{!! Str::limit($post->content, 100) !!}</p>
+                         
                             @if ($post->category)
                                 <p class="text-sm text-gray-500 mb-4">
                                     دسته‌بندی: 

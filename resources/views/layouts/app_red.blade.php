@@ -12,6 +12,29 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="{{ asset('fonts/vazir/Vazir.css') }}" rel="stylesheet" type="text/css" />
       <!-- Place the first <script> tag in your HTML's <head> -->
+        <script src="https://cdn.tiny.cloud/1/09p8d9e28h6zjk2jhpnl1y2vfk1s84vjydyb1f0naz1f4f3z/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        <script>
+            tinymce.init({
+                selector: '#content', // انتخاب textarea
+                language: 'fa', // زبان فارسی
+                plugins: 'lists link image table code',
+                toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table | code',
+                height: 400,
+                setup: function (editor) {
+                    editor.on('change', function () {
+                        tinymce.triggerSave(); // مقدار را به <textarea> منتقل می‌کند
+                    });
+                }
+            });
+            document.querySelector('form').addEventListener('submit', function (e) {
+    const content = tinymce.get('content').getContent(); // مقدار TinyMCE
+    if (!content.trim()) {
+        e.preventDefault(); // جلوگیری از ارسال فرم
+        alert('لطفاً متن را وارد کنید.');
+    }
+});
+
+        </script>
         
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -19,10 +42,10 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased" >
        
     
-        <div class="flex flex-col min-h-screen">
+        <div class="flex flex-col min-h-screen" >
             <!-- Header -->
             <header class="bg-red-800 text-white p-1">
                 <div class="container mx-auto flex flex-col md:flex-row items-center justify-between p-1">
