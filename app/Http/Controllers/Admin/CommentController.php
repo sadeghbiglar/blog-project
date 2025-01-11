@@ -18,13 +18,17 @@ class CommentController extends Controller
     }
     public function index()
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $comments = Comment::with('post', 'user')->latest()->paginate(10);
-        return view('admin.comments.index', compact('comments'));
+        return view('admin.comments.index', compact('comments','layout'));
     }
 
     public function edit(Comment $comment)
     {
-        return view('admin.comments.edit', compact('comment'));
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        return view('admin.comments.edit', compact('comment','layout'));
     }
 
     public function update(Request $request, Comment $comment)

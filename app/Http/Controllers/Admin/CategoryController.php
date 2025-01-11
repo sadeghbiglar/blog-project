@@ -18,13 +18,17 @@ class CategoryController extends Controller
     }
     public function index()
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $categories = Category::latest()->paginate(10);
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.categories.index', compact('categories','layout'));
     }
 
     public function create()
     {
-        return view('admin.categories.create');
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        return view('admin.categories.create',compact('layout'));
     }
 
     public function store(Request $request)
@@ -43,7 +47,9 @@ class CategoryController extends Controller
 
     public function edit(Category $category)
     {
-        return view('admin.categories.edit', compact('category'));
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        return view('admin.categories.edit', compact('category','layout'));
     }
 
     public function update(Request $request, Category $category)

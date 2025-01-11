@@ -20,9 +20,10 @@ class PostController extends Controller
      */
     public function index()
 {
-    
+    $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+    $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
     $posts = \App\Models\Post::with('category')->latest()->paginate(10);
-    return view('admin.posts.index', compact('posts'));
+    return view('admin.posts.index', compact('posts','layout'));
 }
 
 
@@ -31,9 +32,10 @@ class PostController extends Controller
      */
     public function create()
     {
-
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $categories = \App\Models\Category::all(); // دریافت دسته‌بندی‌ها
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories','layout'));
     }
     
     /**
@@ -87,8 +89,10 @@ class PostController extends Controller
      */
     public function edit(\App\Models\Post $post)
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $categories = \App\Models\Category::all(); // دریافت دسته‌بندی‌ها
-        return view('admin.posts.edit', compact('post', 'categories'));
+        return view('admin.posts.edit', compact('post', 'categories','layout'));
     }
     
 

@@ -64,8 +64,10 @@ class PostController extends Controller
     // نمایش فرم ایجاد پست
     public function create()
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $categories = \App\Models\Category::all(); // دریافت تمام دسته‌بندی‌ها
-        return view('posts.create', compact('categories'));
+        return view('posts.create', compact('categories','layout'));
     }
 
     // ذخیره پست جدید
@@ -112,7 +114,9 @@ class PostController extends Controller
         $latestPosts = Post::latest()->take(10)->get();
     // افزایش تعداد بازدید
         $post->increment('views');
-        return view('posts.show', compact('post', 'relatedPosts', 'latestPosts'));
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        return view('posts.show', compact('post', 'relatedPosts', 'latestPosts','layout'));
     }
 
     //آرشیو تقویمی
@@ -120,14 +124,17 @@ class PostController extends Controller
 {
     // فیلتر کردن پست‌ها بر اساس سال
     $posts = Post::whereYear('created_at', $year)->latest()->paginate(10);
-
-    return view('posts.archive', compact('posts', 'year'));
+    $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+    $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+    return view('posts.archive', compact('posts', 'year','layout'));
 }
 
     // ویرایش پست
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        return view('posts.edit', compact('post','layout'));
     }
 
     // به‌روزرسانی پست
