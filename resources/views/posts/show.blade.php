@@ -12,7 +12,7 @@
         </div>
         @endif
 
-        <p class="text-gray-700 leading-relaxed mb-6">{{ $post->content }}</p>
+        <p class="text-gray-700 leading-relaxed mb-6">{ !! $post->content !!}</p>
 
         @if ($post->file)
         <div class="mt-4">

@@ -102,6 +102,12 @@
                             <a href="{{ route('posts.show', $post) }}" class="text-blue-600 hover:underline font-bold">
                                 ادامه مطلب
                             </a>
+                           
+                            <p class="text-sm text-gray-500 mb-4">
+                                تعداد بازدید: 
+                                    {{ $post->views }}
+                            </p>
+                     
                         </div>
                          <!-- ستون تصویر -->
                          @if ($post->image)

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
-
+use Mews\Purifier\Facades\Purifier;
 class PostController extends Controller
 {
     // نمایش لیست پست‌ها
@@ -45,7 +45,7 @@ class PostController extends Controller
     
         Post::create([
             'title' => $request->title,
-            'content' => $request->content,
+            'content' =>Purifier::clean($request->content) ,
             'category_id' => $request->category_id,
             'image' => $imagePath,
         ]);
@@ -70,7 +70,8 @@ class PostController extends Controller
     
         // ده پست آخر
         $latestPosts = Post::latest()->take(10)->get();
-    
+    // افزایش تعداد بازدید
+        $post->increment('views');
         return view('posts.show', compact('post', 'relatedPosts', 'latestPosts'));
     }
 
@@ -105,7 +106,7 @@ class PostController extends Controller
 
         $post->update([
             'title' => $request->title,
-            'content' => $request->content,
+            'content' =>Purifier::clean($request->content) ,
             'image' => $imagePath,
         ]);
 

@@ -11,7 +11,8 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link href="{{ asset('fonts/vazir/Vazir.css') }}" rel="stylesheet" type="text/css" />
-
+      <!-- Place the first <script> tag in your HTML's <head> -->
+        
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -62,7 +63,7 @@
 
             </header>
             
-            @if (session('success'))
+           {{--  @if (session('success'))
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                         {{ session('success') }}
                     </div>
@@ -72,7 +73,7 @@
                     <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
                         {{ session('error') }}
                     </div>
-                @endif
+                @endif --}}
             <!-- Main Content -->
             <main class="flex-grow ">
                 {{-- {{ $slot }} --}}
@@ -84,6 +85,18 @@
                 <p>&copy; 2024 Your Name. All rights reserved.</p>
             </footer>
         </div>
-        
+{{--         <script src="https://cdn.tiny.cloud/1/09p8d9e28h6zjk2jhpnl1y2vfk1s84vjydyb1f0naz1f4f3z/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        tinymce.init({
+        selector: '#content', // id فیلد textarea
+        language: 'fa', // زبان فارسی
+        plugins: 'lists link image table code', // پلاگین‌های مورد نیاز
+        toolbar: 'undo redo | bold italic underline | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image table | code',
+        height: 400,
+    });
+});
+</script> --}}
+
     </body>
 </html>

@@ -1,4 +1,6 @@
 import './bootstrap';
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const likeButtons = document.querySelectorAll('.like-button');
 

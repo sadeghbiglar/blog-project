@@ -14,6 +14,7 @@
             <label for="content" class="block text-gray-700 font-bold mb-2">متن پست:</label>
             <textarea name="content" id="content" rows="5" class="w-full border border-gray-300 rounded-lg px-4 py-2" required></textarea>
         </div>
+      
 
         <div class="mb-4">
             <label for="image" class="block text-gray-700 font-bold mb-2">تصویر پست:</label>
@@ -45,4 +46,6 @@
         </button>
     </form>
 </div>
+
+
 @endsection
