@@ -42,7 +42,7 @@
         <!-- Styles -->
         @livewireStyles
     </head>
-    <body class="font-sans antialiased" >
+    <body class="font-sans antialiased"  >
        
     
         <div class="flex flex-col min-h-screen" >
