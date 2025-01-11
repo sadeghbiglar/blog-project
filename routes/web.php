@@ -16,7 +16,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         // فقط مدیر به داشبورد دسترسی دارد
         if (Auth::check() && Auth::user()->is_admin) {
-            return view('admin.dashboard'); // صفحه داشبورد مدیر
+            $theme = Auth::user()->theme; // دریافت قالب از دیتابیس
+            $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+            return view('admin.dashboard',compact('layout')); // صفحه داشبورد مدیر
         }
         return redirect('/'); // بازگشت به صفحه اصلی برای کاربران عادی
     })->name('dashboard');
@@ -32,6 +34,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('comments', AdminCommentController::class);
+         // روت تغییر قالب
+        Route::post('/change-theme', function (\Illuminate\Http\Request $request) {
+        $request->validate(['theme' => 'required|string|in:default,red']);
+
+        $user = Auth::user();
+
+        // بررسی ادمین بودن کاربر
+        if (!$user->is_admin) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
+
+        $user->theme = $request->theme;
+        $user->save();
+
+        return redirect()->back()->with('success', 'قالب با موفقیت تغییر کرد.');
+        })->name('changeTheme');
     });
 });
 Route::get('/', [PostController::class, 'index'])->name('home');

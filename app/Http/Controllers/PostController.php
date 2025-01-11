@@ -9,6 +9,35 @@ class PostController extends Controller
 {
     // نمایش لیست پست‌ها
     public function index(Request $request)
+{
+    $query = Post::query();
+
+    if ($request->has('search') && $request->search) {
+        $query->where('title', 'like', '%' . $request->search . '%')
+              ->orWhere('content', 'like', '%' . $request->search . '%');
+    }
+
+    $latestPosts = Post::latest()->take(10)->get();
+    $posts = $query->latest()->paginate(10);
+    $totalViews = \App\Models\SiteStatistic::first()->total_views ?? 0;
+
+    if (!request()->hasCookie('visited_site')) {
+        \App\Models\SiteStatistic::firstOrCreate(['id' => 1])
+            ->increment('total_views');
+        cookie()->queue('visited_site', true, 1440);
+    }
+
+    $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+    $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+
+    if (!view()->exists($layout)) {
+        abort(500, 'قالب انتخاب شده وجود ندارد.');
+    }
+
+    return view('home', compact('posts', 'latestPosts', 'totalViews', 'layout'));
+}
+
+/*     public function index(Request $request)
     {
         $query = Post::query();
 
@@ -27,9 +56,10 @@ class PostController extends Controller
         // تنظیم Cookie با اعتبار 24 ساعت
         cookie()->queue('visited_site', true, 1440); // 1440 دقیقه = 24 ساعت
     }
-
-        return view('home', compact('posts','latestPosts', 'totalViews'));
-    }
+    $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+    $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        return view('home', compact('posts','latestPosts', 'totalViews','layout'));
+    } */
 
     // نمایش فرم ایجاد پست
     public function create()

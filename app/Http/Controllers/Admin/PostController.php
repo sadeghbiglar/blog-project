@@ -20,6 +20,7 @@ class PostController extends Controller
      */
     public function index()
 {
+    
     $posts = \App\Models\Post::with('category')->latest()->paginate(10);
     return view('admin.posts.index', compact('posts'));
 }
@@ -30,6 +31,7 @@ class PostController extends Controller
      */
     public function create()
     {
+
         $categories = \App\Models\Category::all(); // دریافت دسته‌بندی‌ها
         return view('admin.posts.create', compact('categories'));
     }

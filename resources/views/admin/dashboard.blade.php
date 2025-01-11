@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends($layout)
 
 @section('content')
 <div class="container mx-auto">
@@ -30,6 +30,20 @@
                 </button>
             </form>
         </div>
+        <div class="bg-white p-4 rounded-lg shadow-md">
+            <h2 class="text-xl font-bold mb-4">انتخاب قالب</h2>
+            <form action="{{ route('dashboard.changeTheme') }}" method="POST">
+                @csrf
+                <select name="theme" class="border border-gray-300 rounded-lg px-4 py-2 mb-4">
+                    <option value="default" {{ auth()->user()->theme === 'default' ? 'selected' : '' }}>قالب پیش‌فرض</option>
+                    <option value="red" {{ auth()->user()->theme === 'red' ? 'selected' : '' }}>قالب قرمز</option>
+                </select>
+                <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                    ذخیره
+                </button>
+            </form>
+        </div>
+        
         
     </div>
 </div>
