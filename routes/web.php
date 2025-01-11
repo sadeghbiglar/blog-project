@@ -10,6 +10,8 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CategoryController;
 use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\Admin\BackupController;
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         // فقط مدیر به داشبورد دسترسی دارد
@@ -26,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/posts/{post}/edit', [AdminPostController::class, 'edit'])->name('posts.edit');
         Route::put('/posts/{post}', [AdminPostController::class, 'update'])->name('posts.update');
         Route::delete('/posts/{post}', [AdminPostController::class, 'destroy'])->name('posts.destroy');
+        Route::post('/backup', [BackupController::class, 'createBackup'])->name('backup')->middleware('auth');
 
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('comments', AdminCommentController::class);
