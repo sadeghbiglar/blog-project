@@ -72,6 +72,23 @@
                 @endforeach
             </ul>
             </div>
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6">
+                <h3 class="text-lg font-bold mb-4">آمار سایت</h3>
+                <p>تعداد بازدید کل سایت: <strong>{{ $totalViews }}</strong></p>
+            </div>
+            
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6">
+                <h3 class="text-lg font-bold mb-4">پربازدیدترین پست‌ها</h3>
+                <ul>
+                    @foreach (\App\Models\Post::orderByDesc('views')->take(5)->get() as $popularPost)
+                        <li>
+                            <a href="{{ route('posts.show', $popularPost) }}" class="text-blue-600 hover:underline">
+                                {{ $popularPost->title }} ({{ $popularPost->views }} بازدید)
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
             
         </aside>
         <section class="w-full md:w-3/5 px-4">
@@ -141,6 +158,7 @@
                     @endforeach
                 </ul>
             </div>
+       
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                 <h3 class="text-lg font-bold mb-4">طبقه‌بندی موضوعی</h3>
                 <ul>

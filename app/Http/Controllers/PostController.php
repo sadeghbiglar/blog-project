@@ -18,7 +18,17 @@ class PostController extends Controller
     }
     $latestPosts = Post::latest()->take(10)->get();
     $posts = $query->latest()->paginate(10);
-        return view('home', compact('posts','latestPosts'));
+    $totalViews = \App\Models\SiteStatistic::first()->total_views ?? 0; // بازدید کل سایت
+
+    if (!request()->hasCookie('visited_site')) {
+        \App\Models\SiteStatistic::firstOrCreate(['id' => 1])
+            ->increment('total_views');
+
+        // تنظیم Cookie با اعتبار 24 ساعت
+        cookie()->queue('visited_site', true, 1440); // 1440 دقیقه = 24 ساعت
+    }
+
+        return view('home', compact('posts','latestPosts', 'totalViews'));
     }
 
     // نمایش فرم ایجاد پست
