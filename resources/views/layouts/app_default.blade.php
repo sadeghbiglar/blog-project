@@ -46,7 +46,7 @@
     
         <div class="flex flex-col min-h-screen">
             <!-- Header -->
-            <header class="bg-gray-800 text-white p-1">
+            <header class="bg-gray-800 text-white fixed top-0 left-0 w-full z-50 shadow-md">
                 <div class="container mx-auto flex flex-col md:flex-row items-center justify-between p-1">
                     <h1 class="font-vazir text-xl font-bold"> یادداشتهای روزانه من</h1>
                 
