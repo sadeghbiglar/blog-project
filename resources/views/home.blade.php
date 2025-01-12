@@ -60,7 +60,7 @@
     <main class="container mx-auto flex flex-wrap mt-6">
         <!-- Right Sidebar -->
         <aside class="w-full md:w-1/5 px-4">
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                 <h3 class="text-lg font-bold mb-4">آخرین پست‌ها</h3>
                 <ul>
                 @foreach ($latestPosts as $latestPost)
@@ -72,12 +72,12 @@
                 @endforeach
             </ul>
             </div>
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                 <h3 class="text-lg font-bold mb-4">آمار سایت</h3>
                 <p>تعداد بازدید کل سایت: <strong>{{ $totalViews }}</strong></p>
             </div>
             
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                 <h3 class="text-lg font-bold mb-4">پربازدیدترین پست‌ها</h3>
                 <ul>
                     @foreach (\App\Models\Post::orderByDesc('views')->take(5)->get() as $popularPost)
@@ -95,36 +95,46 @@
             <div 
              class="grid gap-6">
                 @foreach ($posts as $post)
-                    <article class="bg-white rounded-lg shadow-lg overflow-hidden p-4 flex flex-col md:flex-row items-center md:items-start " style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
+                    <article class="bg-white rounded-lg shadow-lg overflow-hidden p-4 flex flex-col md:flex-row items-center md:items-start mb-1 " style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                        
         
                         <!-- ستون متن -->
-                        <div class="flex-grow">
+                        <div class="flex-grow mb-2">
                             <h2 class="text-xl font-bold mb-2">
-                                <a href="{{ route('posts.show', $post) }}" class="text-gray-800 hover:text-blue-600">
+                                <p class="text-sm text-gray-500 mb-4">
+                                <a href="{{ route('posts.show', $post) }}" class="text-gray-800 hover:text-blue-600 mb-4">
                                     {{ $post->title }}
                                 </a>
+                            </p>
                             </h2>
                             <p class="text-gray-600 mb-4">{!! Str::limit($post->content, 100) !!}</p>
                          
                             @if ($post->category)
-                                <p class="text-sm text-gray-500 mb-4">
+                                <p class="text-sm text-gray-500 mb-6">
                                     دسته‌بندی: 
-                                    <a href="{{ route('categories.show', $post->category->slug) }}" class="text-blue-600 hover:underline">
+                                    <a href="{{ route('categories.show', $post->category->slug) }}" class="text-blue-600 hover:underline mb-4">
                                         {{ $post->category->name }}
                                     </a>
                                 </p>
                             @endif
-        
-                            <a href="{{ route('posts.show', $post) }}" class="text-blue-600 hover:underline font-bold">
+                            <p class="text-sm text-gray-500 mb-4">
+                            <a href="{{ route('posts.show', $post) }}" class="text-blue-600 hover:underline font-bold mb-4">
                                 ادامه مطلب
                             </a>
-                           
+                        </p>
                             <p class="text-sm text-gray-500 mb-4">
                                 تعداد بازدید: 
                                     {{ $post->views }}
                             </p>
-                     
+                            <p class="text-sm text-gray-500 mb-4">
+                                تاریخ ایجاد: {{ toJalali($post->created_at) }}
+                            </p>
+                            @if ($post->updated_at != $post->created_at)
+                                <p class="text-sm text-gray-500 mb-4 ">
+                                    تاریخ ویرایش: {{ toJalali($post->updated_at) }}
+                                </p>
+                            @endif
+                           
                         </div>
                          <!-- ستون تصویر -->
                          @if ($post->image)
@@ -146,7 +156,7 @@
 
         <!-- Left Sidebar -->
         <aside class="w-full md:w-1/5 px-4">
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                 <h3 class="text-lg font-bold mb-4" >آرشیو پست‌ها</h3>
                 <ul>
                     @foreach (\App\Models\Post::selectRaw('YEAR(created_at) as year')->distinct()->pluck('year') as $year)
@@ -159,7 +169,7 @@
                 </ul>
             </div>
        
-            <div class="bg-gray-100 p-4 rounded-lg shadow-lg" style="box-shadow: 6px 6px 29px 1px #60d8e1, 5px 5px 10px 1px #000000;">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-lg" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
                 <h3 class="text-lg font-bold mb-4">طبقه‌بندی موضوعی</h3>
                 <ul>
                     @foreach (\App\Models\Category::all() as $category)
