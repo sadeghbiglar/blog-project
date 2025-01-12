@@ -134,7 +134,10 @@
                                     تاریخ ویرایش: {{ toJalali($post->updated_at) }}
                                 </p>
                             @endif
-                           
+                            <p class="text-sm text-gray-500 mb-4">
+                                نوشته شده توسط: 
+                                <strong>{{ $post->user->name }}</strong> <!-- نام نویسنده -->
+                            </p>
                         </div>
                          <!-- ستون تصویر -->
                          @if ($post->image)

@@ -18,7 +18,7 @@ class PostFactory extends Factory
             'content' => $this->faker->paragraphs(3, true), // محتوای پست
            // 'image' => null, // تصویر (در صورت نیاز می‌توان لینک نمونه اضافه کرد)
            'image' => $this->faker->imageUrl(640, 480, 'posts', true, 'sample'), // تصویر نمونه
-
+            'user_id' => 1, // کاربر پیش‌فرض
         ];
     }
     /**

@@ -73,6 +73,8 @@ class PostController extends Controller
     // ذخیره پست جدید
     public function store(Request $request)
     {
+       
+
         $request->validate([
             'title' => 'required|max:255',
             'content' => 'required',
@@ -84,12 +86,14 @@ class PostController extends Controller
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('posts', 'public');
         }
-    
+       
         Post::create([
             'title' => $request->title,
             'content' =>Purifier::clean($request->content) ,
             'category_id' => $request->category_id,
             'image' => $imagePath,
+            'user_id' => auth()->id(), // مقداردهی user_id به کاربر فعلی
+
         ]);
     
         return redirect()->route('home')->with('success', 'پست با موفقیت ایجاد شد.');
@@ -155,6 +159,8 @@ class PostController extends Controller
             'title' => $request->title,
             'content' =>Purifier::clean($request->content) ,
             'image' => $imagePath,
+            'user_id' => auth()->id(), // مقداردهی user_id به کاربر فعلی
+
         ]);
 
         return redirect()->route('posts.index')->with('success', 'پست با موفقیت به‌روزرسانی شد.');

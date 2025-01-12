@@ -70,6 +70,7 @@ class PostController extends Controller
         'category_id' => $request->category_id,
         'image' => $imagePath,
         'file' => $filePath, // ذخیره مسیر فایل
+        'user_id' => auth()->id(), // مقداردهی user_id به کاربر فعلی
     ]);
 
     return redirect()->route('home')->with('success', 'پست با موفقیت ایجاد شد.');
@@ -132,6 +133,8 @@ class PostController extends Controller
             'content' => $request->content,
             'image' => $imagePath,
             'file' => $filePath, // به‌روزرسانی مسیر فایل
+            'user_id' => auth()->id(), // مقداردهی user_id به کاربر فعلی
+
         ]);
     
         return redirect()->route('posts.index')->with('success', 'پست با موفقیت به‌روزرسانی شد.');

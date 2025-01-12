@@ -9,7 +9,7 @@ class Post extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'content', 'category_id', 'image','file'];
+    protected $fillable = ['title', 'content', 'category_id', 'image','file','user_id'];
     public function comments()
 {
     return $this->hasMany(Comment::class)->where('approved', true);
@@ -22,6 +22,9 @@ public function category()
 {
     return $this->belongsTo(Category::class);
 }
-
+public function user()
+{
+    return $this->belongsTo(User::class);
+}
     //
 }
