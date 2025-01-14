@@ -3,9 +3,11 @@
 @section('content')
 <div class="container mx-auto">
     <h1 class="text-2xl font-bold mb-6">مدیریت کاربران</h1>
+    @can('create-user')
     <a href="{{ route('dashboard.users.create') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 mb-4 inline-block">
         ایجاد کاربر جدید
     </a>
+    @endcan
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
             <thead>
@@ -30,9 +32,11 @@
                         </td>
                                                
                         <td class="px-4 py-2 border">
+                            @can('edit-user')
                             <!-- لینک ویرایش کاربر -->
                             <a href="{{ route('dashboard.users.edit', $user) }}" class="text-blue-600 hover:underline">ویرایش</a>
-                            
+                            @endcan
+                            @can('delete-user')
                             <!-- فرم حذف کاربر -->
                             <form 
                             action="{{ route('dashboard.users.destroy', $user) }}" 
@@ -43,6 +47,7 @@
                             @method('DELETE')
                             <button type="submit" class="text-red-600 hover:underline">حذف</button>
                         </form>
+                        @endcan
                         
                         </td>
                     </tr>

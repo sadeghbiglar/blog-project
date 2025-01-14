@@ -9,6 +9,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Models\Permission;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Admin\BackupController;
 

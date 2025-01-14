@@ -3,13 +3,13 @@
 @section('content')
 <div class="container mx-auto">
     <h1 class="text-2xl font-bold mb-6">مدیریت پست‌ها</h1>
-
+    @can('create-posts')
     <!-- دکمه ایجاد پست جدید -->
     <a href="{{ route('dashboard.posts.create') }}" 
        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 inline-block mb-4">
         ایجاد پست جدید
     </a>
-
+@endcan
     <!-- جدول نمایش پست‌ها -->
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
@@ -30,6 +30,7 @@
                             {{ $post->category ? $post->category->name : 'بدون دسته‌بندی' }}
                         </td>
                         <td class="px-4 py-2 border border-gray-300">
+                            @can('edit-posts')
                             <!-- دکمه ویرایش -->
                             <a href="{{ route('dashboard.posts.edit', $post) }}" 
                                class="text-blue-600 hover:bg-blue-700 px-3 py-2 rounded-lg inline-block">
@@ -37,7 +38,8 @@
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11 17l-4-4m0 0l4-4m-4 4h12" />
                             </svg>
                             </a>
-
+                                @endcan
+                                @can('delete-posts')
                             <!-- دکمه حذف -->
                             <form action="{{ route('dashboard.posts.destroy', $post) }}" method="POST" class="inline-block">
                                 @csrf
@@ -50,6 +52,7 @@
                                         
                                 </button>
                             </form>
+                            @endcan
                         </td>
                     </tr>
                 @empty

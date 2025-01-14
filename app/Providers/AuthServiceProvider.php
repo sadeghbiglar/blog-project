@@ -49,6 +49,18 @@ class AuthServiceProvider extends ServiceProvider
     Gate::define('delete-posts', function ($user) {
         return $user->hasPermission('delete-posts');
     });
+    Gate::define('manage-posts', function ($user) {
+        return $user->hasPermission('manage-posts');
+    });
+    Gate::define('manage-categories', function ($user) {
+        return $user->hasPermission('manage-categories');
+    });
+    Gate::define('manage-comments', function ($user) {
+        return $user->hasPermission('manage-comments');
+    });
+    Gate::define('manage-backup', function ($user) {
+        return $user->hasPermission('manage-backup');
+    });
 /* 
     Gate::define('manage-users', function ($user) {
         return $user->hasPermission('manage-users');
