@@ -26,9 +26,9 @@
                         <td class="px-4 py-2 border">{{ $loop->iteration }}</td>
                         <td class="px-4 py-2 border">{{ $user->name }}</td>
                         <td class="px-4 py-2 border">{{ $user->email }}</td>
-                        <td class="px-4 py-2 border">{{ $user->roles->pluck('name')->join(', ') }}</td>
+                        <td class="px-4 py-2 border">{{ $user->roles->pluck('description')->join(', ') }}</td>
                         <td class="px-4 py-2 border">
-                            {{ optional($user->permissions)->pluck('name')->join(', ') ?? 'بدون دسترسی' }}
+                            {{ optional($user->permissions)->pluck('description')->join(', ') ?? 'بدون دسترسی' }}
                         </td>
                                                
                         <td class="px-4 py-2 border">
