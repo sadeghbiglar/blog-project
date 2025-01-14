@@ -43,6 +43,16 @@
                 </button>
             </form>
         </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <!-- کارت مدیریت کاربران -->
+            <div class="bg-white rounded-lg shadow-lg p-4">
+                <h2 class="text-xl font-bold">مدیریت کاربران</h2>
+                <p class="text-gray-600">ایجاد، ویرایش و حذف کاربران</p>
+                <a href="{{ route('dashboard.users.index') }}" class="text-blue-600 hover:underline">
+                    مشاهده
+                </a>
+            </div>
+        </div>
         
         
     </div>

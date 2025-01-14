@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use Illuminate\Support\Facades\Gate;
 class PostController extends Controller
 {
     public function __construct()
@@ -22,6 +23,7 @@ class PostController extends Controller
 {
     $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
     $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+
     $posts = \App\Models\Post::with('category')->latest()->paginate(10);
     return view('admin.posts.index', compact('posts','layout'));
 }
@@ -34,6 +36,10 @@ class PostController extends Controller
     {
         $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
         $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        if (!Gate::allows('create-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
+    
         $categories = \App\Models\Category::all(); // دریافت دسته‌بندی‌ها
         return view('admin.posts.create', compact('categories','layout'));
     }
@@ -92,6 +98,9 @@ class PostController extends Controller
     {
         $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
         $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        if (!Gate::allows('edit-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         $categories = \App\Models\Category::all(); // دریافت دسته‌بندی‌ها
         return view('admin.posts.edit', compact('post', 'categories','layout'));
     }
@@ -147,6 +156,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if (!Gate::allows('delete-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         // حذف تصویر
         if ($post->image) {
             \Storage::disk('public')->delete($post->image);
