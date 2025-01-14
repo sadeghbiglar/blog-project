@@ -9,13 +9,13 @@ use App\Models\Post;
 use Illuminate\Support\Facades\Gate;
 class PostController extends Controller
 {
-    public function __construct()
+   /*  public function __construct()
     {
         // فقط مدیر به این کنترلر دسترسی دارد
         if (!Auth::check() || !Auth::user()->is_admin) {
             abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
         }
-    }
+    } */
     /**
      * Display a listing of the resource.
      */

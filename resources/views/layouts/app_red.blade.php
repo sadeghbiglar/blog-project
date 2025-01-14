@@ -70,14 +70,14 @@
                     ثبت‌نام
                 </a>
             @endauth
-            @if (Auth::check() && Auth::user()->is_admin)
+            @if (Auth::check() )
     <a href="{{ route('dashboard') }}" 
        class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
- داشبورد مدیریت
+ پنل کاربری
     </a>
      <a href="/" 
        class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700">
-        صفحه اصلی  
+        صفحه اصلی سایت 
     </a>
 @endif
 

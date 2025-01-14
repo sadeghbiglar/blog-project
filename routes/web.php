@@ -15,8 +15,8 @@ use App\Http\Controllers\Admin\BackupController;
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        // فقط مدیر به داشبورد دسترسی دارد
-        if (Auth::check() && Auth::user()->is_admin) {
+        
+        if (Auth::check() ) {
             $theme = Auth::user()->theme; // دریافت قالب از دیتابیس
             $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
             return view('admin.dashboard',compact('layout')); // صفحه داشبورد مدیر
