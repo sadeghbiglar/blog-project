@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends($layout)
 
 @section('content')
 <div class="container mx-auto">
@@ -11,7 +11,7 @@
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
             <thead>
-                <tr class="bg-gray-100 text-gray-700">
+                <tr class="bg-gray-100 text-gray-700 border">
                     <th class="px-4 py-2">#</th>
                     <th class="px-4 py-2">نام</th>
                     <th class="px-4 py-2">ایمیل</th>
@@ -23,11 +23,11 @@
             <tbody>
                 @forelse ($users as $user)
                     <tr>
-                        <td class="px-4 py-2">{{ $loop->iteration }}</td>
-                        <td class="px-4 py-2">{{ $user->name }}</td>
-                        <td class="px-4 py-2">{{ $user->email }}</td>
-                        <td class="px-4 py-2">{{ $user->roles->pluck('name')->join(', ') }}</td>
-                        <td class="px-4 py-2">
+                        <td class="px-4 py-2 border">{{ $loop->iteration }}</td>
+                        <td class="px-4 py-2 border">{{ $user->name }}</td>
+                        <td class="px-4 py-2 border">{{ $user->email }}</td>
+                        <td class="px-4 py-2 border">{{ $user->roles->pluck('name')->join(', ') }}</td>
+                        <td class="px-4 py-2 border">
                             {{ optional($user->permissions)->pluck('name')->join(', ') ?? 'بدون دسترسی' }}
                         </td>
                                                

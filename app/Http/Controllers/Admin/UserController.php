@@ -16,18 +16,21 @@ class UserController extends Controller
         if (!Gate::allows('manage-users')) {
             abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
         }
-    
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         // بارگذاری رابطه permissions
     $users = User::with(['roles', 'permissions'])->paginate(10);
 
-    return view('admin.users.index', compact('users'));
+    return view('admin.users.index', compact('users','layout'));
     }
 
     // نمایش فرم ایجاد کاربر جدید
     public function create()
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $roles = Role::all();
-        return view('admin.users.create', compact('roles'));
+        return view('admin.users.create', compact('roles','layout'));
     }
     public function store(Request $request)
     {
@@ -62,9 +65,11 @@ class UserController extends Controller
     // نمایش فرم ویرایش کاربر
     public function edit(User $user)
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
+        return view('admin.users.edit', compact('user', 'roles', 'permissions','layout'));
     }
     
 
