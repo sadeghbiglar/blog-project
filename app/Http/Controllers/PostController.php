@@ -64,6 +64,9 @@ class PostController extends Controller
     // نمایش فرم ایجاد پست
     public function create()
     {
+        if (!Gate::allows('create-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
         $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $categories = \App\Models\Category::all(); // دریافت تمام دسته‌بندی‌ها
@@ -136,6 +139,9 @@ class PostController extends Controller
     // ویرایش پست
     public function edit(Post $post)
     {
+        if (!Gate::allows('edit-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
         $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         return view('posts.edit', compact('post','layout'));
@@ -169,6 +175,9 @@ class PostController extends Controller
     // حذف پست
     public function destroy(Post $post)
     {
+        if (!Gate::allows('delete-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         if ($post->image) {
             \Storage::disk('public')->delete($post->image);
         }

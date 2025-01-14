@@ -36,5 +36,22 @@ class AuthServiceProvider extends ServiceProvider
             // بررسی اینکه کاربر نقش مدیر کل دارد
             return $user->hasRole('admin');
         });
+
+    // تعریف دسترسی‌ها
+    Gate::define('create-posts', function ($user) {
+        return $user->hasPermission('create-posts');
+    });
+
+    Gate::define('edit-posts', function ($user) {
+        return $user->hasPermission('edit-posts');
+    });
+
+    Gate::define('delete-posts', function ($user) {
+        return $user->hasPermission('delete-posts');
+    });
+/* 
+    Gate::define('manage-users', function ($user) {
+        return $user->hasPermission('manage-users');
+    }); */
     }
 }
