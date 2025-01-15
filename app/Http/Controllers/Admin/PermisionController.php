@@ -10,14 +10,18 @@ class PermisionController extends Controller
      // نمایش لیست دسترسی‌ها
     public function index()
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $permissions = Permission::paginate(10); // صفحه‌بندی دسترسی‌ها
-        return view('admin.permissions.index', compact('permissions'));
+        return view('admin.permissions.index', compact('permissions','layout'));
     }
 
     // نمایش فرم ایجاد دسترسی جدید
     public function create()
     {
-        return view('admin.permissions.create');
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        return view('admin.permissions.create',compact('layout'));
     }
 
     // ذخیره دسترسی جدید
@@ -36,7 +40,9 @@ class PermisionController extends Controller
     // نمایش فرم ویرایش دسترسی
     public function edit(Permission $permission)
     {
-        return view('admin.permissions.edit', compact('permission'));
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        return view('admin.permissions.edit', compact('permission','layout'));
     }
 
     // به‌روزرسانی دسترسی

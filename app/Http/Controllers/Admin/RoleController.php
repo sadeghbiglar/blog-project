@@ -11,14 +11,18 @@ class RoleController extends Controller
 {
     public function index()
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $roles = Role::with('permissions')->paginate(10);
-        return view('admin.roles.index', compact('roles'));
+        return view('admin.roles.index', compact('roles','layout'));
     }
 
     public function create()
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $permissions = Permission::all();
-        return view('admin.roles.create', compact('permissions'));
+        return view('admin.roles.create', compact('permissions','layout'));
     }
 
     public function store(Request $request)
@@ -37,8 +41,10 @@ class RoleController extends Controller
 
     public function edit(Role $role)
     {
+        $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
+        $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $permissions = Permission::all();
-        return view('admin.roles.edit', compact('role', 'permissions'));
+        return view('admin.roles.edit', compact('role', 'permissions','layout'));
     }
 
     public function update(Request $request, Role $role)
