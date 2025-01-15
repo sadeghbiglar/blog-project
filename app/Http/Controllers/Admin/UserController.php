@@ -39,7 +39,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8',
             'roles' => 'required|array',
-            'abilities' => 'nullable|array', // دسترسی‌ها می‌توانند اختیاری باشند
+           
         ]);
     
         // ایجاد کاربر جدید
@@ -52,12 +52,7 @@ class UserController extends Controller
         // تخصیص نقش‌ها به کاربر
         $user->roles()->sync($request->roles);
     
-        // تبدیل دسترسی‌ها به شناسه‌های عددی
-        if ($request->filled('abilities')) {
-            $permissionIds = \App\Models\Permission::whereIn('name', $request->abilities)->pluck('id')->toArray();
-            $user->permissions()->sync($permissionIds);
-        }
-      //  dd($permissionIds, $user->permissions);
+    
 
         return redirect()->route('dashboard.users.index')->with('success', 'کاربر با موفقیت ایجاد شد.');
     }
@@ -79,7 +74,7 @@ class UserController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|email|unique:users,email,' . $user->id,
         'roles' => 'required|array',
-        'abilities' => 'nullable|array',
+       
     ]);
 
     // به‌روزرسانی اطلاعات کاربر
@@ -97,13 +92,7 @@ class UserController extends Controller
     // تخصیص نقش‌ها به کاربر
     $user->roles()->sync($request->roles);
 
-    // تبدیل دسترسی‌ها به شناسه‌های عددی
-    if ($request->filled('abilities')) {
-        $permissionIds = \App\Models\Permission::whereIn('name', $request->abilities)->pluck('id')->toArray();
-        $user->permissions()->sync($permissionIds);
-    }else {
-        $user->permissions()->detach();
-    }
+   
 
     return redirect()->route('dashboard.users.index')->with('success', 'اطلاعات کاربر با موفقیت به‌روزرسانی شد.');
 }

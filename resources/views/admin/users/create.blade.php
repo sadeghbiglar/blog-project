@@ -25,17 +25,7 @@
                 @endforeach
             </select>
         </div>
-        <div class="mb-4">
-            <label for="abilities" class="block text-gray-700 font-bold mb-2">دسترسی‌ها:</label>
-            <div class="flex flex-wrap">
-                @foreach (\App\Models\Permission::all() as $permission)
-                    <label class="mr-4 mb-2">
-                        <input type="checkbox" name="abilities[]" value="{{ $permission->name }}">
-                        {{ $permission->description }}
-                    </label>
-                @endforeach
-            </div>
-        </div>
+       
         
         
         

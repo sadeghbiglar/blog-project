@@ -9,6 +9,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\RoleController;
 use App\Http\Models\Permission;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Admin\BackupController;
@@ -36,7 +37,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('comments', AdminCommentController::class);
         Route::resource('users', \App\Http\Controllers\Admin\UserController::class)
-        ->middleware('can:manage-users'); // محدود کردن به توانایی "مدیریت کاربران";
+        ->middleware('can:manage-users'); 
+        Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class)
+        ->middleware(['auth', 'can:manage-roles']);
+   
 
          // روت تغییر قالب
         Route::post('/change-theme', function (\Illuminate\Http\Request $request) {
@@ -44,10 +48,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         $user = Auth::user();
 
-        // بررسی ادمین بودن کاربر
+       /*  // بررسی ادمین بودن کاربر
         if (!$user->is_admin) {
             abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
-        }
+        } */
 
         $user->theme = $request->theme;
         $user->save();

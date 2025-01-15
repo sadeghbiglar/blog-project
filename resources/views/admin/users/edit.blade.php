@@ -53,18 +53,7 @@
             </select>
         </div>
 
-        <div class="mb-4">
-            <label for="abilities" class="block text-gray-700 font-bold mb-2">دسترسی‌ها:</label>
-            <div class="flex flex-wrap">
-                @foreach ($permissions as $permission)
-                    <label class="mr-4 mb-2">
-                        <input type="checkbox" name="abilities[]" value="{{ $permission->name }}"
-                            {{ $user->hasPermission($permission->name) ? 'checked' : '' }}>
-                        {{ $permission->description }}
-                    </label>
-                @endforeach
-            </div>
-        </div>
+      
 
         <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
             ذخیره تغییرات

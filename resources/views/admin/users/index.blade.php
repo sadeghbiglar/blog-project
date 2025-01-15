@@ -16,7 +16,7 @@
                     <th class="px-4 py-2">نام</th>
                     <th class="px-4 py-2">ایمیل</th>
                     <th class="px-4 py-2">نقش‌ها</th>
-                    <th class="px-4 py-2">دسترسی‌ها</th>
+                   
                     <th class="px-4 py-2">عملیات</th>
                 </tr>
             </thead>
@@ -27,9 +27,6 @@
                         <td class="px-4 py-2 border">{{ $user->name }}</td>
                         <td class="px-4 py-2 border">{{ $user->email }}</td>
                         <td class="px-4 py-2 border">{{ $user->roles->pluck('description')->join(', ') }}</td>
-                        <td class="px-4 py-2 border">
-                            {{ optional($user->permissions)->pluck('description')->join(', ') ?? 'بدون دسترسی' }}
-                        </td>
                                                
                         <td class="px-4 py-2 border">
                             @can('edit-user')

@@ -26,6 +26,13 @@
             <a href="{{ route('dashboard.comments.index') }}" class="text-blue-600 hover:underline">مشاهده</a>
         </div>
         @endcan
+        @can('manage-roles')
+        <div class="bg-white rounded-lg shadow-lg p-4">
+            <h2 class="text-xl font-bold">نقش های کاربری</h2>
+            <p class="text-gray-600">مدیریت نقش کاربران</p>
+            <a href="{{ route('dashboard.roles.index') }}" class="text-blue-600 hover:underline">مشاهده</a>
+        </div>
+        @endcan
         @can('manage-backup')
         <div class="bg-white rounded-lg shadow-lg p-4">
             <h2 class="text-xl font-bold">پشتیبان‌گیری از دیتابیس</h2>
@@ -38,6 +45,7 @@
             </form>
         </div>
         @endcan
+        
         <div class="bg-white p-4 rounded-lg shadow-md">
             <h2 class="text-xl font-bold mb-4">انتخاب قالب</h2>
             <form action="{{ route('dashboard.changeTheme') }}" method="POST">
