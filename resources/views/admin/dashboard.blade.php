@@ -33,6 +33,13 @@
             <a href="{{ route('dashboard.roles.index') }}" class="text-blue-600 hover:underline">مشاهده</a>
         </div>
         @endcan
+        @can('manage-permisions')
+        <div class="bg-white rounded-lg shadow-lg p-4">
+            <h2 class="text-xl font-bold">مجوزهای کاربری</h2>
+            <p class="text-gray-600">مدیریت دسترسی نقشها</p>
+            <a href="{{ route('dashboard.permissions.index') }}" class="text-blue-600 hover:underline">مشاهده</a>
+        </div>
+        @endcan
         @can('manage-backup')
         <div class="bg-white rounded-lg shadow-lg p-4">
             <h2 class="text-xl font-bold">پشتیبان‌گیری از دیتابیس</h2>

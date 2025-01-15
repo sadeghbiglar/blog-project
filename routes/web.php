@@ -40,7 +40,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('can:manage-users'); 
         Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class)
         ->middleware(['auth', 'can:manage-roles']);
-   
+        Route::resource('permissions', \App\Http\Controllers\Admin\PermisionController::class)
+        ->middleware(['auth', 'can:manage-permisions']);
 
          // روت تغییر قالب
         Route::post('/change-theme', function (\Illuminate\Http\Request $request) {
