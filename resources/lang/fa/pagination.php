@@ -3,4 +3,5 @@
 return [
     'previous' => '&laquo; قبلی',
     'next' => 'بعدی &raquo;',
+    'Name' => 'نام',
 ];
