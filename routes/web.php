@@ -111,3 +111,4 @@ Route::post('/contact', function (Request $request) {
 //Route::resource('posts', PostController::class);
 //Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 //Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
+
