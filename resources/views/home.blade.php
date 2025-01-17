@@ -19,10 +19,10 @@
     <nav class="bg-gray-700 text-white">
         <div class="container mx-auto flex flex-col md:flex-row items-center justify-between p-1">
             <ul class="flex p-4">
-                <li class="mr-4"><a href="/" class="hover:underline">صفحه اصلی</a></li>
-                <li class="mr-4"><a href="/about" class="hover:underline">درباره ما</a></li>
+                <li class="mr-4"><a href="/" class="hover:underline">{{ __('custom.home') }} </a></li>
+                <li class="mr-4"><a href="/about" class="hover:underline">{{ __('custom.about') }} </a></li>
                 <li class="relative group mr-4">
-                    <a href="#" class="hover:underline">دسته‌بندی‌ها</a>
+                    <a href="#" class="hover:underline">{{ __('custom.categories') }} </a>
                     <ul class="absolute hidden group-hover:block bg-gray-800 text-white mt-2 rounded-lg shadow-lg min-w-48 max-w-64">
                         @foreach (\App\Models\Category::all() as $category)
                             <li>
@@ -34,7 +34,7 @@
                     </ul>
                     
                 </li>
-                <li class="mr-4"><a href="/contact" class="hover:underline">تماس با ما</a></li>
+                <li class="mr-4"><a href="/contact" class="hover:underline">  {{ __('custom.contact') }}</a></li>
              
                 
             </ul>
@@ -43,11 +43,11 @@
             <input 
                 type="text" 
                 name="search" 
-                placeholder="جستجو..." 
+                placeholder="{{ __('custom.search') }}" 
                 class="border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-500"
             >
             <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-700">
-                جستجو
+                {{ __('custom.search') }}
             </button>
         </form> 
        
@@ -61,7 +61,7 @@
         <!-- Right Sidebar -->
         <aside class="w-full md:w-1/5 px-4">
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
-                <h3 class="text-lg font-bold mb-4">آخرین پست‌ها</h3>
+                <h3 class="text-lg font-bold mb-4">{{ __('custom.last-posts') }} </h3>
                 <ul>
                 @foreach ($latestPosts as $latestPost)
                     <li class="mb-2">
@@ -73,17 +73,17 @@
             </ul>
             </div>
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
-                <h3 class="text-lg font-bold mb-4">آمار سایت</h3>
-                <p>تعداد بازدید کل سایت: <strong>{{ $totalViews }}</strong></p>
+                <h3 class="text-lg font-bold mb-4"> {{ __('custom.visitor-count') }}</h3>
+                <p>{{ __('custom.visitor-count')}} <strong>{{ $totalViews }}</strong></p>
             </div>
             
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
-                <h3 class="text-lg font-bold mb-4">پربازدیدترین پست‌ها</h3>
+                <h3 class="text-lg font-bold mb-4">{{ __('custom.most-viewed-posts') }} </h3>
                 <ul>
                     @foreach (\App\Models\Post::orderByDesc('views')->take(5)->get() as $popularPost)
                         <li>
                             <a href="{{ route('posts.show', $popularPost) }}" class="text-blue-600 hover:underline">
-                                {{ $popularPost->title }} ({{ $popularPost->views }} بازدید)
+                                {{ $popularPost->title }} ({{ $popularPost->views }} {{ __('custom.visit') }})
                             </a>
                         </li>
                     @endforeach
@@ -111,7 +111,7 @@
                          
                             @if ($post->category)
                                 <p class="text-sm text-gray-500 mb-6">
-                                    دسته‌بندی: 
+                                    {{ __('custom.categories') }} 
                                     <a href="{{ route('categories.show', $post->category->slug) }}" class="text-blue-600 hover:underline mb-4">
                                         {{ $post->category->name }}
                                     </a>
@@ -119,24 +119,23 @@
                             @endif
                             <p class="text-sm text-gray-500 mb-4">
                             <a href="{{ route('posts.show', $post) }}" class="text-blue-600 hover:underline font-bold mb-4">
-                                ادامه مطلب
+                                {{ __('custom.read-more') }}
                             </a>
                         </p>
                             <p class="text-sm text-gray-500 mb-4">
-                                تعداد بازدید: 
+                                {{ __('custom.visit-counts') }}
                                     {{ $post->views }}
                             </p>
                             <p class="text-sm text-gray-500 mb-4">
-                                تاریخ ایجاد: {{ toJalali($post->created_at) }}
+                                {{ __('custom.created_at') }} {{ toJalali($post->created_at) }}
                             </p>
                             @if ($post->updated_at != $post->created_at)
                                 <p class="text-sm text-gray-500 mb-4 ">
-                                    تاریخ ویرایش: {{ toJalali($post->updated_at) }}
+                                    {{ __('custom.updated_at') }} {{ toJalali($post->updated_at) }}
                                 </p>
                             @endif
                             <p class="text-sm text-gray-500 mb-4">
-                                نوشته شده توسط: 
-                                <strong>{{ $post->user->name }}</strong> <!-- نام نویسنده -->
+                                {{ __('custom.written_by') }}                                <strong>{{ $post->user->name }}</strong> <!-- نام نویسنده -->
                             </p>
                         </div>
                          <!-- ستون تصویر -->
@@ -155,17 +154,17 @@
             </div>
         </section>
         
-        
+      
 
         <!-- Left Sidebar -->
         <aside class="w-full md:w-1/5 px-4">
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg mb-6" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
-                <h3 class="text-lg font-bold mb-4" >آرشیو پست‌ها</h3>
+                <h3 class="text-lg font-bold mb-4" >   {{ __('custom.post-archive') }}  </h3>
                 <ul>
                     @foreach (\App\Models\Post::selectRaw('YEAR(created_at) as year')->distinct()->pluck('year') as $year)
                         <li>
                             <a href="{{ route('archive', $year) }}" class="text-blue-600 hover:underline">
-                                سال {{ $year }}
+                                {{ __('custom.year') }} {{ $year }}
                             </a>
                         </li>
                     @endforeach
@@ -173,7 +172,7 @@
             </div>
        
             <div class="bg-gray-100 p-4 rounded-lg shadow-lg" style="box-shadow: 3px 3px 3px 1px #60d8e1, 5px 5px 10px 1px #000000;">
-                <h3 class="text-lg font-bold mb-4">طبقه‌بندی موضوعی</h3>
+                <h3 class="text-lg font-bold mb-4">{{ __('custom.subject-classification') }} </h3>
                 <ul>
                     @foreach (\App\Models\Category::all() as $category)
                             <li>
