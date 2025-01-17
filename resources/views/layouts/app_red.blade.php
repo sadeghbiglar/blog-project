@@ -142,7 +142,7 @@
                     </div>
                 @endif 
             <!-- Main Content -->
-            <main class="flex-grow ">
+            <main class="flex-grow mt-10">
                 {{-- {{ $slot }} --}}
                 @yield('content')
             </main>
