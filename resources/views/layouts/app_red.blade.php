@@ -56,37 +56,8 @@
                 
                      <!-- بخش ورود/خروج -->
         <div class="flex items-center">
+        
             @auth
-                <!-- دکمه خروج -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-red-700">
-                        خروج
-                    </button>
-                </form>
-            @else
-                <!-- دکمه‌های ورود و ثبت‌نام -->
-                <a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-700">
-                    ورود
-                </a>
-                <a href="{{ route('register') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-green-700">
-                    ثبت‌نام
-                </a>
-            @endauth
-            @if (Auth::check() )
-    <a href="{{ route('dashboard') }}" 
-       class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
- پنل کاربری
-    </a>
-     <a href="/" 
-       class="bg-yellow-600 text-white px-4 py-2 rounded-lg hover:bg-yellow-700">
-        صفحه اصلی سایت 
-    </a>
-@endif
-@if (Auth::check())
-    
-
-
 <div class="ms-3 relative">
     <x-dropdown align="right" width="48">
         <x-slot name="trigger">
@@ -120,11 +91,16 @@
                 {{ __('Profile') }}
             </x-dropdown-link>
 
-            @if (Laravel\Jetstream\Jetstream::hasApiFeatures())
-                <x-dropdown-link href="{{ route('api-tokens.index') }}">
-                    {{ __('API Tokens') }}
-                </x-dropdown-link>
-            @endif
+           
+            <x-dropdown-link href="{{ route('dashboard') }}">
+                {{ __('Dashboard') }}
+            </x-dropdown-link>
+
+            <x-dropdown-link href="{{ route('home') }}">
+                {{ __('HomePage') }}
+            </x-dropdown-link>
+            
+        
 
             <div class="border-t border-gray-200"></div>
 
@@ -139,7 +115,16 @@
         </x-slot>
     </x-dropdown>
 </div>
-@endif
+
+@else
+<!-- دکمه‌های ورود و ثبت‌نام -->
+<a href="{{ route('login') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-blue-700">
+    ورود
+</a>
+<a href="{{ route('register') }}" class="bg-green-600 text-white px-4 py-2 rounded-lg ml-2 hover:bg-green-700">
+    ثبت‌نام
+</a>
+@endauth
         </div>
                 </div>
 
