@@ -19,13 +19,13 @@ class PostController extends Controller
 
     $latestPosts = Post::latest()->take(10)->get();
     $posts = $query->latest()->paginate(10);
-    $totalViews = \App\Models\SiteStatistic::first()->total_views ?? 0;
 
     if (!request()->hasCookie('visited_site')) {
         \App\Models\SiteStatistic::firstOrCreate(['id' => 1])
             ->increment('total_views');
         cookie()->queue('visited_site', true, 1440);
     }
+    $totalViews = \App\Models\SiteStatistic::first()->total_views ?? 0;
 
     $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
     $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
