@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Mews\Purifier\Facades\Purifier;
+use Illuminate\Support\Facades\Session;
+
 class PostController extends Controller
 {
     // نمایش لیست پست‌ها
     public function index(Request $request)
 {
+  //  dd(Session::get('locale'));
     $query = Post::query();
 
     if ($request->has('search') && $request->search) {

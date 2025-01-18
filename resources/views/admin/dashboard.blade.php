@@ -76,6 +76,17 @@
                 </a>
             </div>
         @endcan
+           <!-- کارت مدیریت کاربران -->
+           <div class="bg-white rounded-lg shadow-lg p-4">
+            <h2 class="text-xl font-bold">مدیریت زبان سایت</h2>
+            <p class="text-gray-600 mb-5" >تغییر زبان سایت - زبان فعلی: {{ app()->getLocale() }}</p>
+
+                <a href="{{ route('set-locale', 'en') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg">English</a>
+                <a href="{{ route('set-locale', 'fa') }}" class="px-4 py-2 bg-green-600 text-white rounded-lg">فارسی</a>
+                <a href="{{ route('set-locale', 'ar') }}" class="px-4 py-2 bg-red-600 text-white rounded-lg">العربية</a>
+           
+        </div>
+        
         
     </div>
 </div>

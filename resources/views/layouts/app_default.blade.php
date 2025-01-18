@@ -124,6 +124,7 @@
                 </div>
 
             </header>
+          
             
              @if (session('success'))
                     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
@@ -136,15 +137,22 @@
                         {{ session('error') }}
                     </div>
                 @endif 
+            
+
+
             <!-- Main Content -->
             <main class="flex-grow mt-10">
+
                 {{-- {{ $slot }} --}}
                 @yield('content')
+            
             </main>
         
             <!-- Footer -->
             <footer class="bg-gray-800 text-white p-4 text-center">
                 <p>&copy; 2025 sadeghbiglar.ir. All rights reserved.</p>
+             
+
             </footer>
         </div>
 {{--         <script src="https://cdn.tiny.cloud/1/09p8d9e28h6zjk2jhpnl1y2vfk1s84vjydyb1f0naz1f4f3z/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>

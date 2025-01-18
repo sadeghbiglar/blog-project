@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
+
 class PostController extends Controller
 {
    /*  public function __construct()

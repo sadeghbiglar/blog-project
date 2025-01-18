@@ -9,10 +9,27 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\RoleController;
 use App\Http\Models\Permission;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Admin\BackupController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+Route::get('/set-locale/{locale}', function ($locale) {
+    if (in_array($locale, ['fa', 'en', 'ar'])) { // زبان‌های مجاز
+        if (Auth::check()) {
+            // اگر کاربر لاگین است، زبان در جدول ذخیره می‌شود
+            Auth::user()->update(['locale' => $locale]);
+            
+        } else {
+            // زبان به سشن برای کاربران مهمان ذخیره می‌شود
+            session(['locale' => $locale]);
+        }
+        app()->setLocale($locale); // تنظیم زبان برای این درخواست
+    }
+    return redirect()->back(); // بازگشت به صفحه قبلی
+})->name('set-locale');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
