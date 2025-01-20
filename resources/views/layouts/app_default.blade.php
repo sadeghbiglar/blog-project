@@ -54,6 +54,7 @@
                 
                      <!-- بخش ورود/خروج -->
         <div class="flex items-center">
+ 
             @auth
             <div class="ms-3 relative">
                 <x-dropdown align="right" width="48">
