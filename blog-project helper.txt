@@ -14,3 +14,14 @@ php artisan migrate
 php artisan db:seed
 login to site
 amazing!!!!!
+
+--------------------
+برای عملکرد صحیح بکاپ داخل پنل در صورتی که از زمپ استفاده میکنید:
+کلیدهای Windows + R را بزنید و sysdm.cpl را تایپ کنید و Enter بزنید.
+به تب Advanced بروید و روی دکمه Environment Variables کلیک کنید.
+در بخش System Variables:
+متغیر Path را پیدا کنید و روی Edit کلیک کنید.
+مسیر C:\xampp\mysql\bin را به لیست اضافه کنید.
+تغییرات را ذخیره کنید و Command Prompt را مجدداً باز کنید.
+
+و درصورتی که از نرم افزار دیگری استفاده میکنید کار مشابه را انجام داده و فقط مسیر را ویرایش کنید
