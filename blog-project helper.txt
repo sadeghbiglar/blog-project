@@ -1,0 +1,16 @@
+git clone https://github.com/sadeghbiglar/blog-project.git
+cd blog-project
+start mysql and apache
+create database -> blog-project
+npm install
+composer install
+npm run build 
+npm run dev
+composer run dev
+php artisan key:generate
+open project url
+git checkout multiUser
+php artisan migrate
+php artisan db:seed
+login to site
+amazing!!!!!
