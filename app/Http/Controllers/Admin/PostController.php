@@ -21,12 +21,21 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
 {
     $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
     $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+    $query = Post::query();
 
-    $posts = \App\Models\Post::with('category')->latest()->paginate(10);
+    // جستجو بر اساس عنوان یا محتوا
+    if ($request->has('search') && $request->search !== null) {
+        $query->where('title', 'like', '%' . $request->search . '%')
+              ->orWhere('content', 'like', '%' . $request->search . '%');
+    }
+
+    // گرفتن پست‌ها با صفحه‌بندی
+    $posts = $query->latest()->paginate(10);
+   // $posts = \App\Models\Post::with('category')->latest()->paginate(10);
     return view('admin.posts.index', compact('posts','layout'));
 }
 

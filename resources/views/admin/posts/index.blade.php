@@ -10,6 +10,19 @@
         ایجاد پست جدید
     </a>
 @endcan
+ <!-- فرم جستجو -->
+ <form method="GET" action="{{ route('dashboard.posts.index') }}" class="mb-4">
+    <input 
+        type="text" 
+        name="search" 
+        value="{{ request('search') }}" 
+        placeholder="جستجو بر اساس عنوان یا محتوا" 
+        class="w-full border border-gray-300 rounded-lg px-4 py-2" 
+    >
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 mt-2">
+        جستجو
+    </button>
+</form>
     <!-- جدول نمایش پست‌ها -->
     <div class="overflow-x-auto">
         <table class="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
@@ -70,7 +83,7 @@
 
     <!-- صفحه‌بندی -->
     <div class="mt-6">
-        {{ $posts->links() }}
+        {{ $posts->appends(request()->except('page'))->links() }}
     </div>
 </div>
 @endsection
