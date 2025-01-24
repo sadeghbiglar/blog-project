@@ -117,7 +117,7 @@ Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallb
 use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
 
 // غیرفعال کردن روت پیش‌فرض
-Route::post('/logout', [CustomAuthenticatedSessionController::class, 'destroy'])->name('logout');
+//Route::post('/logout', [CustomAuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 // Route::get('/', function () {
 //     return view('welcome');
