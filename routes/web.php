@@ -108,6 +108,12 @@ Route::post('/contact', function (Request $request) {
     return back()->with('success', 'پیام شما ارسال شد!');
 })->name('contact.submit');
 
+
+use App\Http\Controllers\Auth\GoogleController;
+
+Route::get('/auth/google/redirect', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
