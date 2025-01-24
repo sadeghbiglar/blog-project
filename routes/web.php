@@ -114,6 +114,11 @@ use App\Http\Controllers\Auth\GoogleController;
 Route::get('/auth/google/redirect', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
 
+use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
+
+// غیرفعال کردن روت پیش‌فرض
+Route::post('/logout', [CustomAuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
