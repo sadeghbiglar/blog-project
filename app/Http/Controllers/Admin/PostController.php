@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Http;
 
 class PostController extends Controller
 {
@@ -89,7 +90,13 @@ class PostController extends Controller
         'file' => $filePath, // ذخیره مسیر فایل
         'user_id' => auth()->id(), // مقداردهی user_id به کاربر فعلی
     ]);
-
+    $response = Http::post("https://tapi.bale.ai/bot869096853:r9W6q195DomYh6lyRtF1nOZJn2SWPoigMxEepzrF/sendMessage", [
+        'chat_id'=> '@logview',
+         'text' => $request->content, // متن پیام
+     ]);
+     if ($response->successful()) {
+        return redirect()->route('home')->with('success', 'پست با موفقیت ایجاد شد.');
+     } 
     return redirect()->route('home')->with('success', 'پست با موفقیت ایجاد شد.');
 }
 
