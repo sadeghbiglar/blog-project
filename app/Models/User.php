@@ -29,7 +29,32 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'theme',
+        'locale',
     ];
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+    public function hasRole($role)
+    {
+        return $this->roles()->where('name', $role)->exists();
+    }
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'permission_user'); // نام جدول رابط
+    }
+    
+    public function hasPermission($permission)
+    {
+        return $this->permissions()->where('name', $permission)->exists() ||
+               $this->roles->flatMap->permissions->pluck('name')->contains($permission);
+    }
+    public function canManageUsers()
+{
+    return $this->roles->contains('name', 'مدیر کل'); // فقط مدیر کل
+}
 
     /**
      * The attributes that should be hidden for serialization.

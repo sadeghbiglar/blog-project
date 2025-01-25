@@ -1,4 +1,10 @@
-<x-app-layout>
+@php
+    $theme = auth()->check() ? auth()->user()->theme : 'default';
+    $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+@endphp
+
+@extends($layout)
+@section('content')
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Profile') }}
@@ -42,4 +48,4 @@
             @endif
         </div>
     </div>
-</x-app-layout>
+    @endsection

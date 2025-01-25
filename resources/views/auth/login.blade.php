@@ -42,6 +42,10 @@
                 <x-button class="ms-4">
                     {{ __('Log in') }}
                 </x-button>
+                <a href="{{ route('google.redirect') }}" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600">
+                    Google ورود با 
+                </a>
+                
             </div>
         </form>
     </x-authentication-card>

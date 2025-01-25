@@ -6,5 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SiteStatistic extends Model
 {
-    //
+    protected $fillable = ['id', 'total_views'];
+
 }

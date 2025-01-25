@@ -5,21 +5,42 @@
     
     <h1 class="text-2xl font-bold mb-6">داشبورد مدیریت</h1>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        @can('manage-posts')
         <div class="bg-white rounded-lg shadow-lg p-4">
             <h2 class="text-xl font-bold">پست‌ها</h2>
             <p class="text-gray-600">مدیریت پست‌های سایت</p>
             <a href="{{ route('dashboard.posts.index') }}" class="text-blue-600 hover:underline">مشاهده</a>
         </div>
+        @endcan
+        @can('manage-categories')
         <div class="bg-white rounded-lg shadow-lg p-4">
             <h2 class="text-xl font-bold">دسته‌بندی‌ها</h2>
             <p class="text-gray-600">مدیریت دسته‌بندی‌های سایت</p>
             <a href="{{ route('dashboard.categories.index') }}" class="text-blue-600 hover:underline">مشاهده</a>
         </div>
+        @endcan
+        @can('manage-comments')
         <div class="bg-white rounded-lg shadow-lg p-4">
             <h2 class="text-xl font-bold">نظرات</h2>
             <p class="text-gray-600">مدیریت نظرات کاربران</p>
             <a href="{{ route('dashboard.comments.index') }}" class="text-blue-600 hover:underline">مشاهده</a>
         </div>
+        @endcan
+        @can('manage-roles')
+        <div class="bg-white rounded-lg shadow-lg p-4">
+            <h2 class="text-xl font-bold">نقش های کاربری</h2>
+            <p class="text-gray-600">مدیریت نقش کاربران</p>
+            <a href="{{ route('dashboard.roles.index') }}" class="text-blue-600 hover:underline">مشاهده</a>
+        </div>
+        @endcan
+        @can('manage-permisions')
+        <div class="bg-white rounded-lg shadow-lg p-4">
+            <h2 class="text-xl font-bold">مجوزهای کاربری</h2>
+            <p class="text-gray-600">مدیریت دسترسی نقشها</p>
+            <a href="{{ route('dashboard.permissions.index') }}" class="text-blue-600 hover:underline">مشاهده</a>
+        </div>
+        @endcan
+        @can('manage-backup')
         <div class="bg-white rounded-lg shadow-lg p-4">
             <h2 class="text-xl font-bold">پشتیبان‌گیری از دیتابیس</h2>
             <p class="text-gray-600">برای ذخیره یک نسخه از دیتابیس روی دکمه زیر کلیک کنید.</p>
@@ -30,6 +51,8 @@
                 </button>
             </form>
         </div>
+        @endcan
+        
         <div class="bg-white p-4 rounded-lg shadow-md">
             <h2 class="text-xl font-bold mb-4">انتخاب قالب</h2>
             <form action="{{ route('dashboard.changeTheme') }}" method="POST">
@@ -42,6 +65,26 @@
                     ذخیره
                 </button>
             </form>
+        </div>
+        @can('manage-users')
+            <!-- کارت مدیریت کاربران -->
+            <div class="bg-white rounded-lg shadow-lg p-4">
+                <h2 class="text-xl font-bold">مدیریت کاربران</h2>
+                <p class="text-gray-600">ایجاد، ویرایش و حذف کاربران</p>
+                <a href="{{ route('dashboard.users.index') }}" class="text-blue-600 hover:underline">
+                    مشاهده
+                </a>
+            </div>
+        @endcan
+           <!-- کارت مدیریت کاربران -->
+           <div class="bg-white rounded-lg shadow-lg p-4">
+            <h2 class="text-xl font-bold">مدیریت زبان سایت</h2>
+            <p class="text-gray-600 mb-5" >تغییر زبان سایت - زبان فعلی: {{ app()->getLocale() }}</p>
+
+                <a href="{{ route('set-locale', 'en') }}" class="px-4 py-2 bg-blue-600 text-white rounded-lg">English</a>
+                <a href="{{ route('set-locale', 'fa') }}" class="px-4 py-2 bg-green-600 text-white rounded-lg">فارسی</a>
+                <a href="{{ route('set-locale', 'ar') }}" class="px-4 py-2 bg-red-600 text-white rounded-lg">العربية</a>
+           
         </div>
         
         

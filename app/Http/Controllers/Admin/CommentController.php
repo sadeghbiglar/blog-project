@@ -18,6 +18,7 @@ class CommentController extends Controller
     }
     public function index()
     {
+       
         $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
         $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $comments = Comment::with('post', 'user')->latest()->paginate(10);

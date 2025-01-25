@@ -9,13 +9,32 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\RoleController;
+use App\Http\Models\Permission;
 use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Admin\BackupController;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Session;
+Route::get('/set-locale/{locale}', function ($locale) {
+    if (in_array($locale, ['fa', 'en', 'ar'])) { // زبان‌های مجاز
+        if (Auth::check()) {
+            // اگر کاربر لاگین است، زبان در جدول ذخیره می‌شود
+            Auth::user()->update(['locale' => $locale]);
+            
+        } else {
+            // زبان به سشن برای کاربران مهمان ذخیره می‌شود
+            session(['locale' => $locale]);
+        }
+        app()->setLocale($locale); // تنظیم زبان برای این درخواست
+    }
+    return redirect()->back(); // بازگشت به صفحه قبلی
+})->name('set-locale');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
-        // فقط مدیر به داشبورد دسترسی دارد
-        if (Auth::check() && Auth::user()->is_admin) {
+        
+        if (Auth::check() ) {
             $theme = Auth::user()->theme; // دریافت قالب از دیتابیس
             $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
             return view('admin.dashboard',compact('layout')); // صفحه داشبورد مدیر
@@ -34,16 +53,23 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::resource('categories', AdminCategoryController::class);
         Route::resource('comments', AdminCommentController::class);
+        Route::resource('users', \App\Http\Controllers\Admin\UserController::class)
+        ->middleware('can:manage-users'); 
+        Route::resource('roles', \App\Http\Controllers\Admin\RoleController::class)
+        ->middleware(['auth', 'can:manage-roles']);
+        Route::resource('permissions', \App\Http\Controllers\Admin\PermisionController::class)
+        ->middleware(['auth', 'can:manage-permisions']);
+
          // روت تغییر قالب
         Route::post('/change-theme', function (\Illuminate\Http\Request $request) {
         $request->validate(['theme' => 'required|string|in:default,red']);
 
         $user = Auth::user();
 
-        // بررسی ادمین بودن کاربر
+       /*  // بررسی ادمین بودن کاربر
         if (!$user->is_admin) {
             abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
-        }
+        } */
 
         $user->theme = $request->theme;
         $user->save();
@@ -82,6 +108,17 @@ Route::post('/contact', function (Request $request) {
     return back()->with('success', 'پیام شما ارسال شد!');
 })->name('contact.submit');
 
+
+use App\Http\Controllers\Auth\GoogleController;
+
+Route::get('/auth/google/redirect', [GoogleController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('/auth/google/callback', [GoogleController::class, 'handleGoogleCallback']);
+
+use App\Http\Controllers\Auth\CustomAuthenticatedSessionController;
+
+// غیرفعال کردن روت پیش‌فرض
+//Route::post('/logout', [CustomAuthenticatedSessionController::class, 'destroy'])->name('logout');
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -102,3 +139,4 @@ Route::post('/contact', function (Request $request) {
 //Route::resource('posts', PostController::class);
 //Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 //Route::get('/posts/search', [PostController::class, 'search'])->name('posts.search');
+

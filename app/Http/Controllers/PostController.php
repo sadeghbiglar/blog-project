@@ -5,11 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use Mews\Purifier\Facades\Purifier;
+use Illuminate\Support\Facades\Session;
+
 class PostController extends Controller
 {
     // نمایش لیست پست‌ها
     public function index(Request $request)
 {
+  //  dd(Session::get('locale'));
     $query = Post::query();
 
     if ($request->has('search') && $request->search) {
@@ -19,13 +22,13 @@ class PostController extends Controller
 
     $latestPosts = Post::latest()->take(10)->get();
     $posts = $query->latest()->paginate(10);
-    $totalViews = \App\Models\SiteStatistic::first()->total_views ?? 0;
 
     if (!request()->hasCookie('visited_site')) {
         \App\Models\SiteStatistic::firstOrCreate(['id' => 1])
             ->increment('total_views');
         cookie()->queue('visited_site', true, 1440);
     }
+    $totalViews = \App\Models\SiteStatistic::first()->total_views ?? 0;
 
     $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
     $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
@@ -64,6 +67,9 @@ class PostController extends Controller
     // نمایش فرم ایجاد پست
     public function create()
     {
+        if (!Gate::allows('create-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
         $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         $categories = \App\Models\Category::all(); // دریافت تمام دسته‌بندی‌ها
@@ -136,6 +142,9 @@ class PostController extends Controller
     // ویرایش پست
     public function edit(Post $post)
     {
+        if (!Gate::allows('edit-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
         $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
         return view('posts.edit', compact('post','layout'));
@@ -169,6 +178,9 @@ class PostController extends Controller
     // حذف پست
     public function destroy(Post $post)
     {
+        if (!Gate::allows('delete-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         if ($post->image) {
             \Storage::disk('public')->delete($post->image);
         }

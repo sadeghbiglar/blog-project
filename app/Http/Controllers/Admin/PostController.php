@@ -6,23 +6,37 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Http;
+
 class PostController extends Controller
 {
-    public function __construct()
+   /*  public function __construct()
     {
         // فقط مدیر به این کنترلر دسترسی دارد
         if (!Auth::check() || !Auth::user()->is_admin) {
             abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
         }
-    }
+    } */
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
 {
     $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
     $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
-    $posts = \App\Models\Post::with('category')->latest()->paginate(10);
+    $query = Post::query();
+
+    // جستجو بر اساس عنوان یا محتوا
+    if ($request->has('search') && $request->search !== null) {
+        $query->where('title', 'like', '%' . $request->search . '%')
+              ->orWhere('content', 'like', '%' . $request->search . '%');
+    }
+
+    // گرفتن پست‌ها با صفحه‌بندی
+    $posts = $query->latest()->paginate(10);
+   // $posts = \App\Models\Post::with('category')->latest()->paginate(10);
     return view('admin.posts.index', compact('posts','layout'));
 }
 
@@ -34,6 +48,10 @@ class PostController extends Controller
     {
         $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
         $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        if (!Gate::allows('create-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
+    
         $categories = \App\Models\Category::all(); // دریافت دسته‌بندی‌ها
         return view('admin.posts.create', compact('categories','layout'));
     }
@@ -72,7 +90,13 @@ class PostController extends Controller
         'file' => $filePath, // ذخیره مسیر فایل
         'user_id' => auth()->id(), // مقداردهی user_id به کاربر فعلی
     ]);
-
+    $response = Http::post("https://tapi.bale.ai/bot869096853:r9W6q195DomYh6lyRtF1nOZJn2SWPoigMxEepzrF/sendMessage", [
+        'chat_id'=> '@logview',
+         'text' => $request->content, // متن پیام
+     ]);
+     if ($response->successful()) {
+        return redirect()->route('home')->with('success', 'پست با موفقیت ایجاد شد.');
+     } 
     return redirect()->route('home')->with('success', 'پست با موفقیت ایجاد شد.');
 }
 
@@ -92,6 +116,9 @@ class PostController extends Controller
     {
         $theme = auth()->check() ? auth()->user()->theme : 'default'; // بررسی قالب کاربر
         $layout = $theme === 'red' ? 'layouts.app_red' : 'layouts.app_default';
+        if (!Gate::allows('edit-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         $categories = \App\Models\Category::all(); // دریافت دسته‌بندی‌ها
         return view('admin.posts.edit', compact('post', 'categories','layout'));
     }
@@ -147,6 +174,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if (!Gate::allows('delete-posts')) {
+            abort(403, 'شما اجازه دسترسی به این بخش را ندارید.');
+        }
         // حذف تصویر
         if ($post->image) {
             \Storage::disk('public')->delete($post->image);

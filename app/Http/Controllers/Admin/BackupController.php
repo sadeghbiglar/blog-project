@@ -21,7 +21,7 @@ class BackupController extends Controller
 
             // دستور برای پشتیبان‌گیری
             $command = sprintf(
-                'mysqldump --user=%s --password=%s --host=%s %s > %s',
+                '"C:\\xampp\\mysql\\bin\\mysqldump" --user=%s --password=%s --host=%s %s > %s',
                 env('DB_USERNAME'),   // نام کاربری دیتابیس
                 env('DB_PASSWORD'),   // رمز عبور دیتابیس
                 env('DB_HOST'),       // میزبان دیتابیس
